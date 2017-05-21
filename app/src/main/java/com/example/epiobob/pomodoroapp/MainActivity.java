@@ -8,6 +8,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-       FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -26,6 +30,29 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        String[] tasks = {
+                "Implement next view",
+                "Connect app to database",
+                "Setup Spring JPA Data",
+                "Fix Vaadin grid bug"
+        };
+
+//        ListAdapter myAdapter = new ArrayAdapter<String>(this, R.layout.activity_main, tasks);
+        ListAdapter myAdapter = new TaskAdapter(this, tasks);
+
+        ListView rootListView = (ListView) findViewById(R.id.rootListView);
+        rootListView.setAdapter(myAdapter);
+
+        rootListView.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        // we should create new view with Task details here
+                        // Task task = parent.getItemAtPosition(position);
+                    }
+                }
+        );
     }
 
     @Override
