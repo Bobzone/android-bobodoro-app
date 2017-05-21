@@ -1,5 +1,6 @@
 package com.example.epiobob.pomodoroapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -48,8 +49,10 @@ public class MainActivity extends AppCompatActivity {
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        // we should create new view with Task details here
-                        // Task task = parent.getItemAtPosition(position);
+                        Intent intent = new Intent(MainActivity.this, TaskDetailsActivity.class);
+                        // TODO - refactor to use serializable Task object
+                        intent.putExtra("task_context", (String) parent.getItemAtPosition(position));
+                        startActivity(intent);
                     }
                 }
         );
