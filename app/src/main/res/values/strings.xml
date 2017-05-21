@@ -5,4 +5,5 @@
     <string name="tvTaskDetailsTitle">Task title:</string>
     <string name="tvDescription">Description:</string>
     <string name="startSession">Start</string>
+    <string name="session_label">Session</string>
 </resources>

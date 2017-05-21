@@ -34,4 +34,10 @@ public class TaskDetailsActivity extends Activity {
 
         taskDetailsTitle.setText(task_context);
     }
+
+
+    public void startSession(View view) {
+        Intent intent = new Intent(this, SessionStartedActivity.class);
+        startActivity(intent);
+    }
 }

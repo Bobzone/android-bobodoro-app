@@ -22,7 +22,11 @@
 
         <activity
             android:name=".TaskDetailsActivity"
-            android:label="@string/task_details_label"></activity>
+            android:label="@string/task_details_label" />
+
+        <activity
+            android:name=".SessionStartedActivity"
+            android:label="@string/session_label" />
     </application>
 
 </manifest>
