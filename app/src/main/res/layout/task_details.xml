@@ -66,9 +66,9 @@
         android:layout_marginBottom="20dp"
         android:drawableLeft="@drawable/stopwatch_plus32"
         android:drawablePadding="10dp"
+        android:onClick="startSession"
         android:padding="20dp"
-        android:text="@string/startSession"
-        android:onClick="startSession"/>
+        android:text="@string/startSession" />
 
     <ImageButton
         android:id="@+id/button"

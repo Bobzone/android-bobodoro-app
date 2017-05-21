@@ -5,6 +5,7 @@ import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Chronometer;
@@ -48,10 +49,18 @@ public class SessionStartedActivity extends Activity {
 
             @Override
             public void onFinish() {
-                Toast.makeText(SessionStartedActivity.this, "Finished timer!", Toast.LENGTH_SHORT).show();
                 timer.setText("0.0");
+                taskOptionsButtonPressed(SessionStartedActivity.this.getCurrentFocus());
             }
         };
         countDownTimer.start();
+    }
+
+    public void taskOptionsButtonPressed(View view) {
+        Toast.makeText(SessionStartedActivity.this, "Finished timer!", Toast.LENGTH_SHORT).show();
+    }
+
+    public void backButtonPressed(View view) {
+        this.finish();
     }
 }
