@@ -57,4 +57,42 @@
         android:paddingLeft="20dp"
         android:paddingTop="10dp" />
 
+    <Button
+        android:id="@+id/startSessionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:drawableLeft="@drawable/stopwatch_plus32"
+        android:drawablePadding="10dp"
+        android:padding="20dp"
+        android:text="@string/startSession" />
+
+    <ImageButton
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/startSessionButton"
+        android:layout_alignTop="@+id/startSessionButton"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_toLeftOf="@+id/startSessionButton"
+        android:layout_toStartOf="@+id/startSessionButton"
+        android:background="?android:selectableItemBackground"
+        android:src="@drawable/success64" />
+
+    <ImageButton
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/startSessionButton"
+        android:layout_alignTop="@+id/startSessionButton"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_toEndOf="@+id/startSessionButton"
+        android:layout_toRightOf="@+id/startSessionButton"
+        android:background="?android:selectableItemBackground"
+        android:src="@drawable/error64" />
+
 </RelativeLayout>

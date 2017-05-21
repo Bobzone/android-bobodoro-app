@@ -31,7 +31,7 @@ class TaskAdapter extends ArrayAdapter<String> {
         ImageView taskIcon = (ImageView) customView.findViewById(R.id.ivTaskIcon);
 
         taskText.setText(singleTaskItem);
-        taskIcon.setImageResource(R.drawable.tomato);
+        taskIcon.setImageResource(R.drawable.tomato64);
 
         return customView;
     }

@@ -9,7 +9,7 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_margin="10dp"
-        android:src="@drawable/tomato" />
+        android:src="@drawable/tomato64" />
 
     <EditText
         android:id="@+id/etTaskItem"
