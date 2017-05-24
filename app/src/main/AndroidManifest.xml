@@ -27,6 +27,10 @@
         <activity
             android:name=".SessionStartedActivity"
             android:label="@string/session_label" />
+
+        <activity
+            android:name=".CreditsActivity"
+            android:label="Credits" />
     </application>
 
 </manifest>
