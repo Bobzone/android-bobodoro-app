@@ -2,6 +2,7 @@ package com.example.epiobob.pomodoroapp;
 
 import java.io.Serializable;
 
+import static com.example.epiobob.pomodoroapp.TaskStatusEnum.BLANK;
 import static com.example.epiobob.pomodoroapp.TaskStatusEnum.IN_PROGRESS;
 
 /**
@@ -46,5 +47,26 @@ public class Task implements Serializable {
         public Task build() {
             return new Task(title, description, status);
         }
+    }
+
+    public String getTitle() {
+        if (title == null) {
+            return "Empty title";
+        }
+        return title;
+    }
+
+    public String getDescription() {
+        if (description == null) {
+            return "Empty description";
+        }
+        return description;
+    }
+
+    public TaskStatusEnum getStatus() {
+        if (status == null) {
+            return BLANK;
+        }
+        return status;
     }
 }

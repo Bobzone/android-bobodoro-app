@@ -32,19 +32,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        String[] tasks = {
-                "Implement next view",
-                "Connect app to database",
-                "Setup Spring JPA Data",
-                "Fix Vaadin grid bug"
-        };
-
-//        Task[] tasks = {
-//                new Task.Builder().build(),
-//                new Task.Builder().build(),
-//                new Task.Builder().build(),
-//                new Task.Builder().build(),
+//        String[] tasks = {
+//                "Implement next view",
+//                "Connect app to database",
+//                "Setup Spring JPA Data",
+//                "Fix Vaadin grid bug"
 //        };
+
+        Task[] tasks = {
+                new Task.Builder().build(),
+                new Task.Builder().build(),
+                new Task.Builder().build(),
+                new Task.Builder().build(),
+        };
 
 //        ListAdapter myAdapter = new ArrayAdapter<String>(this, R.layout.activity_main, tasks);
         ListAdapter myAdapter = new TaskAdapter(this, tasks);
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent intent = new Intent(MainActivity.this, TaskDetailsActivity.class);
                         // TODO - refactor to use serializable Task object
-                        intent.putExtra("task_context", (String) parent.getItemAtPosition(position));
+                        intent.putExtra("task_context", (Task) parent.getItemAtPosition(position));
                         startActivity(intent);
                     }
                 }

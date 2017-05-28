@@ -14,9 +14,9 @@ import android.widget.TextView;
  * Created by epiobob on 2017-05-21.
  */
 
-class TaskAdapter extends ArrayAdapter<String> {
+class TaskAdapter extends ArrayAdapter<Task> {
 
-    public TaskAdapter(@NonNull Context context, String[] tasks) {
+    public TaskAdapter(@NonNull Context context, Task[] tasks) {
         super(context, R.layout.task_on_list, tasks);
     }
 
@@ -26,11 +26,11 @@ class TaskAdapter extends ArrayAdapter<String> {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View customView = inflater.inflate(R.layout.task_on_list, parent, false);
 
-        String singleTaskItem = getItem(position);
+        Task singleTaskItem = getItem(position);
         TextView taskText = (TextView) customView.findViewById(R.id.etTaskItem);
         ImageView taskIcon = (ImageView) customView.findViewById(R.id.ivTaskIcon);
 
-        taskText.setText(singleTaskItem);
+        taskText.setText(singleTaskItem.getTitle());
         taskIcon.setImageResource(R.drawable.tomato64);
 
         return customView;

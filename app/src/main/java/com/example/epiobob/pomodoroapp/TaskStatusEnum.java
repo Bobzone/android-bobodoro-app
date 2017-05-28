@@ -8,6 +8,7 @@ enum TaskStatusEnum {
 
     COMPLETE,
     IN_PROGRESS,
-    ARCHIVED
+    ARCHIVED,
+    BLANK
 
 }
