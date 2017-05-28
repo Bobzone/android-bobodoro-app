@@ -1,9 +1,15 @@
 package com.example.epiobob.pomodoroapp;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.Window;
@@ -36,9 +42,9 @@ public class SessionStartedActivity extends Activity {
     }
 
     private void startTimer() {
-//        CountDownTimer countDownTimer = new CountDownTimer(25 * 1000, 1000) {
-        // TODO - uncomment in PROD
-        CountDownTimer countDownTimer = new CountDownTimer(25 * 60 * 1000, 1000) {
+        CountDownTimer countDownTimer = new CountDownTimer(25 * 1000, 1000) {
+            // TODO - uncomment in PROD
+//        CountDownTimer countDownTimer = new CountDownTimer(25 * 60 * 1000, 1000) {
 
             @Override
             public void onTick(long millisUntilFinished) {
@@ -51,9 +57,18 @@ public class SessionStartedActivity extends Activity {
             public void onFinish() {
                 timer.setText("0.0");
                 taskOptionsButtonPressed(SessionStartedActivity.this.getCurrentFocus());
+
+                Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+                r.play();
+
+                Vibrator v = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+                v.vibrate(1000);
             }
         };
         countDownTimer.start();
+
+//        startService(new Intent(this, WakeUpScreenService.class));
     }
 
     public void taskOptionsButtonPressed(View view) {
