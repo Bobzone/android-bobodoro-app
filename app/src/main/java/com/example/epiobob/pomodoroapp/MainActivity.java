@@ -39,6 +39,13 @@ public class MainActivity extends AppCompatActivity {
                 "Fix Vaadin grid bug"
         };
 
+//        Task[] tasks = {
+//                new Task.Builder().build(),
+//                new Task.Builder().build(),
+//                new Task.Builder().build(),
+//                new Task.Builder().build(),
+//        };
+
 //        ListAdapter myAdapter = new ArrayAdapter<String>(this, R.layout.activity_main, tasks);
         ListAdapter myAdapter = new TaskAdapter(this, tasks);
 
