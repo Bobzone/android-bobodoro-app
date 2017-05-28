@@ -1,9 +1,9 @@
 package com.example.epiobob.pomodoroapp;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.icu.text.SimpleDateFormat;
+import android.content.DialogInterface;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -14,11 +14,8 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.Date;
 
 /**
  * Created by epiobob on 2017-05-21.
@@ -56,7 +53,6 @@ public class SessionStartedActivity extends Activity {
             @Override
             public void onFinish() {
                 timer.setText("0.0");
-                taskOptionsButtonPressed(SessionStartedActivity.this.getCurrentFocus());
 
                 Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                 Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
@@ -64,11 +60,11 @@ public class SessionStartedActivity extends Activity {
 
                 Vibrator v = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
                 v.vibrate(1000);
+
+                showSessionFinishedAlertDialog(SessionStartedActivity.this.getCurrentFocus());
             }
         };
         countDownTimer.start();
-
-//        startService(new Intent(this, WakeUpScreenService.class));
     }
 
     public void taskOptionsButtonPressed(View view) {
@@ -77,5 +73,26 @@ public class SessionStartedActivity extends Activity {
 
     public void backButtonPressed(View view) {
         this.finish();
+    }
+
+    public void showSessionFinishedAlertDialog(View view) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Session finished");
+
+        String[] animals = {"Start break", "Start next session", "Mark task as complete"};
+        builder.setItems(animals, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case 0: // horse
+                    case 1: // cow
+                    case 2: // camel
+                }
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
