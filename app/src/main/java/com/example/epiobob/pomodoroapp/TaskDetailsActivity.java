@@ -29,7 +29,7 @@ public class TaskDetailsActivity extends Activity {
 
     private void passDataFromIntent() {
         EditText taskDetailsTitle = (EditText) findViewById(R.id.etTaskDetailsTitle);
-        // TODO - refactor to use serializable Task object
+
         Task task_context = (Task) intent.getSerializableExtra("task_context");
 
         taskDetailsTitle.setText(task_context.getTitle());

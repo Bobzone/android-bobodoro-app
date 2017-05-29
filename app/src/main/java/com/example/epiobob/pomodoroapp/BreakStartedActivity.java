@@ -22,7 +22,7 @@ import android.widget.Toast;
  * Created by epiobob on 2017-05-21.
  */
 
-public class SessionStartedActivity extends Activity {
+public class BreakStartedActivity extends Activity {
 
     private TextView timer;
     private CountDownTimer countDownTimer;
@@ -37,13 +37,13 @@ public class SessionStartedActivity extends Activity {
 
         setContentView(R.layout.session);
         timer = (TextView) findViewById(R.id.sessionTimer);
-        // TODO - uncomment in PROD
-        startWorkTimer(25 * 1000);
-//        startWorkTimer(25 * 60 * 1000);
+        // TODO - uncomment in PROD#2
+        startBreakTimer(20 * 1000);
+//        startWorkTimer(25 * 5 * 1000);
     }
 
-    private void startWorkTimer(final int workLength) {
-        countDownTimer = new CountDownTimer(workLength, 1000) {
+    private void startBreakTimer(final int breakLength) {
+        countDownTimer = new CountDownTimer(breakLength, 1000) {
 
             @Override
             public void onTick(long millisUntilFinished) {
@@ -63,7 +63,7 @@ public class SessionStartedActivity extends Activity {
                 Vibrator v = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
                 v.vibrate(1000);
 
-                showSessionFinishedAlertDialog(SessionStartedActivity.this.getCurrentFocus());
+                showSessionFinishedAlertDialog(BreakStartedActivity.this.getCurrentFocus());
             }
         };
         countDownTimer.start();
@@ -79,25 +79,21 @@ public class SessionStartedActivity extends Activity {
     public void showSessionFinishedAlertDialog(View view) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Session finished");
+        builder.setTitle("Break finished");
 
-        String[] animals = {"Start break", "Start next session", "Mark task as complete"};
+        String[] animals = {"Start session", "Start another break"};
         builder.setItems(animals, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case 0: {
-                        Intent intent = new Intent(SessionStartedActivity.this, BreakStartedActivity.class);
+                        Intent intent = new Intent(BreakStartedActivity.this, SessionStartedActivity.class);
                         startActivity(intent);
                         break;
                     }
                     case 1: {
-                        Intent intent = new Intent(SessionStartedActivity.this, SessionStartedActivity.class);
+                        Intent intent = new Intent(BreakStartedActivity.this, BreakStartedActivity.class);
                         startActivity(intent);
-                        break;
-                    }
-                    case 2: {
-                        // TODO - mark task as complete
                         break;
                     }
                 }
@@ -108,3 +104,4 @@ public class SessionStartedActivity extends Activity {
         dialog.show();
     }
 }
+

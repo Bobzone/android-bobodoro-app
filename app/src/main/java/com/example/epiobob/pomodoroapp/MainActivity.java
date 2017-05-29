@@ -32,13 +32,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        String[] tasks = {
-//                "Implement next view",
-//                "Connect app to database",
-//                "Setup Spring JPA Data",
-//                "Fix Vaadin grid bug"
-//        };
-
         Task[] tasks = {
                 new Task.Builder().build(),
                 new Task.Builder().build(),
@@ -57,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent intent = new Intent(MainActivity.this, TaskDetailsActivity.class);
-                        // TODO - refactor to use serializable Task object
                         intent.putExtra("task_context", (Task) parent.getItemAtPosition(position));
                         startActivity(intent);
                     }

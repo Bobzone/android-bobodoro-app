@@ -6,4 +6,6 @@
     <string name="tvDescription">Description:</string>
     <string name="startSession">Start</string>
     <string name="session_label">Session</string>
+    <string name="break_label">Break</string>
+    <string name="credits_label">Credits</string>
 </resources>

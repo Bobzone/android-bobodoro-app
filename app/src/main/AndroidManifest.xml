@@ -34,8 +34,12 @@
             android:label="@string/session_label" />
 
         <activity
+            android:name=".BreakStartedActivity"
+            android:label="@string/break_label" />
+
+        <activity
             android:name=".CreditsActivity"
-            android:label="Credits" />
+            android:label="@string/credits_label" />
     </application>
 
 </manifest>
