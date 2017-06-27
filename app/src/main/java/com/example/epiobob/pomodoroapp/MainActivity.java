@@ -37,14 +37,13 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                createNewTask(context);
+//            }
+//        });
 
         tasks = new ArrayList<>();
         tasks.add(new Task.Builder().build());
@@ -136,5 +135,13 @@ public class MainActivity extends AppCompatActivity {
     public void goToCredits(MenuItem item) {
         Intent intent = new Intent(this, CreditsActivity.class);
         startActivity(intent);
+    }
+
+    public void createNewTask(View view) {
+        Intent intent = new Intent(MainActivity.this, TaskDetailsActivity.class);
+        taskContext = new Task.Builder().build();
+        tasks.add(taskContext);
+        intent.putExtra("task_context", taskContext);
+        startActivityForResult(intent, SAVE_TASK_CHANGE);
     }
 }
