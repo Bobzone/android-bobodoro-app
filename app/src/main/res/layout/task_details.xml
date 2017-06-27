@@ -43,7 +43,7 @@
         android:text="@string/tvDescription" />
 
     <EditText
-        android:id="@+id/taskDescription"
+        android:id="@+id/etTaskDetailsDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -95,5 +95,14 @@
         android:layout_toRightOf="@+id/startSessionButton"
         android:background="?android:selectableItemBackground"
         android:src="@drawable/error64" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:onClick="saveChanges"
+        android:text="Button" />
 
 </RelativeLayout>

@@ -26,6 +26,7 @@ public class SessionStartedActivity extends Activity {
 
     private TextView timer;
     private CountDownTimer countDownTimer;
+    private Task taskContext;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class SessionStartedActivity extends Activity {
 
         setContentView(R.layout.session);
         timer = (TextView) findViewById(R.id.sessionTimer);
+        taskContext = (Task) getIntent().getSerializableExtra("task_context");
         // TODO - uncomment in PROD
         startWorkTimer(25 * 1000);
 //        startWorkTimer(25 * 60 * 1000);
@@ -76,6 +78,12 @@ public class SessionStartedActivity extends Activity {
         finish();
     }
 
+    @Override
+    public void onBackPressed() {
+        backButtonPressed(this.getCurrentFocus());
+        super.onBackPressed();
+    }
+
     public void showSessionFinishedAlertDialog(View view) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -97,7 +105,8 @@ public class SessionStartedActivity extends Activity {
                         break;
                     }
                     case 2: {
-                        // TODO - mark task as complete
+                        taskContext.markAsComplete();
+                        onBackPressed();
                         break;
                     }
                 }

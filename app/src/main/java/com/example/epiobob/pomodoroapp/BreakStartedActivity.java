@@ -76,6 +76,12 @@ public class BreakStartedActivity extends Activity {
         finish();
     }
 
+    @Override
+    public void onBackPressed() {
+        backButtonPressed(this.getCurrentFocus());
+        super.onBackPressed();
+    }
+
     public void showSessionFinishedAlertDialog(View view) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

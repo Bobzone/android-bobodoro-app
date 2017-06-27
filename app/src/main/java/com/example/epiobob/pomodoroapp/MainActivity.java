@@ -1,5 +1,7 @@
 package com.example.epiobob.pomodoroapp;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -12,9 +14,21 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final int SAVE_TASK_CHANGE = 113;
+    private Task taskContext;
+    private List<Task> tasks;
+    private TaskAdapter myAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,15 +46,34 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Task[] tasks = {
-                new Task.Builder().build(),
-                new Task.Builder().build(),
-                new Task.Builder().build(),
-                new Task.Builder().build(),
-        };
+        tasks = new ArrayList<>();
+        tasks.add(new Task.Builder().build());
 
-//        ListAdapter myAdapter = new ArrayAdapter<String>(this, R.layout.activity_main, tasks);
-        ListAdapter myAdapter = new TaskAdapter(this, tasks);
+        String filename = "bobodoroTasks.dat";
+        File file = new File(filename);
+        if (file.exists()) {
+            // read from internal storage
+            FileInputStream fis;
+            try {
+                fis = openFileInput(filename);
+                ObjectInputStream ois = new ObjectInputStream(fis);
+                tasks = (List<Task>) ois.readObject();
+                ois.close();
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else {
+            // save to internal storage
+            try {
+                ObjectOutputStream out = new ObjectOutputStream(openFileOutput(filename, Context.MODE_PRIVATE));
+                out.writeObject(tasks);
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        myAdapter = new TaskAdapter(this, tasks);
 
         ListView rootListView = (ListView) findViewById(R.id.rootListView);
         rootListView.setAdapter(myAdapter);
@@ -50,11 +83,32 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent intent = new Intent(MainActivity.this, TaskDetailsActivity.class);
-                        intent.putExtra("task_context", (Task) parent.getItemAtPosition(position));
-                        startActivity(intent);
+                        taskContext = (Task) parent.getItemAtPosition(position);
+//                        TODO - this might work - refactor material
+//                        intent.putExtra("task_context", tasks.get(tasks.indexOf(taskContext)));
+                        intent.putExtra("task_context", taskContext);
+                        startActivityForResult(intent, SAVE_TASK_CHANGE);
                     }
                 }
         );
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case (SAVE_TASK_CHANGE): {
+                if (resultCode == Activity.RESULT_OK) {
+                    Task resultTask = (Task) data.getSerializableExtra("task_context");
+                    tasks.set(tasks.indexOf(taskContext), resultTask);
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override

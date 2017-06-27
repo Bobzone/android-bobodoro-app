@@ -10,13 +10,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
 /**
  * Created by epiobob on 2017-05-21.
  */
 
 class TaskAdapter extends ArrayAdapter<Task> {
 
-    public TaskAdapter(@NonNull Context context, Task[] tasks) {
+    public TaskAdapter(@NonNull Context context, List<Task> tasks) {
         super(context, R.layout.task_on_list, tasks);
     }
 
@@ -34,5 +36,10 @@ class TaskAdapter extends ArrayAdapter<Task> {
         taskIcon.setImageResource(R.drawable.tomato64);
 
         return customView;
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
     }
 }

@@ -3,6 +3,7 @@ package com.example.epiobob.pomodoroapp;
 import java.io.Serializable;
 
 import static com.example.epiobob.pomodoroapp.TaskStatusEnum.BLANK;
+import static com.example.epiobob.pomodoroapp.TaskStatusEnum.COMPLETE;
 import static com.example.epiobob.pomodoroapp.TaskStatusEnum.IN_PROGRESS;
 
 /**
@@ -19,6 +20,10 @@ public class Task implements Serializable {
         this.title = title;
         this.description = description;
         this.status = status;
+    }
+
+    public void markAsComplete() {
+        this.status = COMPLETE;
     }
 
     static class Builder {
