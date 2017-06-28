@@ -37,9 +37,4 @@ class TaskAdapter extends ArrayAdapter<Task> {
 
         return customView;
     }
-
-    @Override
-    public void notifyDataSetChanged() {
-        super.notifyDataSetChanged();
-    }
 }

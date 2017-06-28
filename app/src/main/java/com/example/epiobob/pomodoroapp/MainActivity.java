@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
     private List<Task> tasks;
     private TaskAdapter myAdapter;
 
+    private static final String INTERNAL_STORAGE_FILENAME = "bobodoroTasks.dat";
+    private static final File INTERNAL_STORAGE_FILE = new File(INTERNAL_STORAGE_FILENAME);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,39 +41,12 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                createNewTask(context);
-//            }
-//        });
-
-        tasks = new ArrayList<>();
-        tasks.add(new Task.Builder().build());
-
-        String filename = "bobodoroTasks.dat";
-        File file = new File(filename);
-        if (file.exists()) {
-            // read from internal storage
-            FileInputStream fis;
-            try {
-                fis = openFileInput(filename);
-                ObjectInputStream ois = new ObjectInputStream(fis);
-                tasks = (List<Task>) ois.readObject();
-                ois.close();
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+        if (INTERNAL_STORAGE_FILE.exists()) {
+            readFromInternalStorage(INTERNAL_STORAGE_FILE);
         } else {
-            // save to internal storage
-            try {
-                ObjectOutputStream out = new ObjectOutputStream(openFileOutput(filename, Context.MODE_PRIVATE));
-                out.writeObject(tasks);
-                out.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            tasks = new ArrayList<>();
+            tasks.add(new Task.Builder().build());
+//            saveToInternalStorage(INTERNAL_STORAGE_FILE);
         }
 
         myAdapter = new TaskAdapter(this, tasks);
@@ -108,6 +85,30 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        saveToInternalStorage(INTERNAL_STORAGE_FILE);
+    }
+
+    public void saveToInternalStorage(final File file) {
+        try {
+            ObjectOutputStream out = new ObjectOutputStream(openFileOutput(file.getName(), Context.MODE_PRIVATE));
+            out.writeObject(tasks);
+            Log.i("MainActivity", "Saving to internal storage...");
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void readFromInternalStorage(final File file) {
+        FileInputStream fis;
+        try {
+            fis = openFileInput(file.getName());
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            tasks = (List<Task>) ois.readObject();
+            ois.close();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -143,5 +144,6 @@ public class MainActivity extends AppCompatActivity {
         tasks.add(taskContext);
         intent.putExtra("task_context", taskContext);
         startActivityForResult(intent, SAVE_TASK_CHANGE);
+        Log.i("MainActivity", "Creating new task...");
     }
 }

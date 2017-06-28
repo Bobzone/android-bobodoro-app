@@ -51,7 +51,7 @@ public class TaskDetailsActivity extends Activity {
                 .setTitle(String.valueOf(taskDetailsTitle.getText()))
                 .setDescription(String.valueOf(taskDetailsDescription.getText()))
                 .build();
-        Log.i("TaskDetailsActivity", "Saving changes!!!");
+        Log.i("TaskDetailsActivity", "Saving changes to task.");
         Intent resultIntent = new Intent();
         resultIntent.putExtra("task_context", taskContext);
         setResult(Activity.RESULT_OK, resultIntent);
