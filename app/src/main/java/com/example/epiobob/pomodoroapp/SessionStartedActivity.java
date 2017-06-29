@@ -5,18 +5,25 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.PowerManager;
 import android.os.Vibrator;
 import android.support.annotation.Nullable;
+import android.util.FloatMath;
+import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * Created by epiobob on 2017-05-21.
@@ -27,6 +34,14 @@ public class SessionStartedActivity extends Activity {
     private TextView timer;
     private CountDownTimer countDownTimer;
     private Task taskContext;
+    private Sensor accSensor;
+    private float mAccel;
+    private float mAccelCurrent;
+    private float mAccelLast;
+    private SensorManager sm;
+    private SensorEventListener accSensorListener;
+    private PowerManager.WakeLock wakeLock;
+    private PowerManager pm;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,13 +50,75 @@ public class SessionStartedActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD |
+                WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
+                WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
 
         setContentView(R.layout.session);
         timer = (TextView) findViewById(R.id.sessionTimer);
         taskContext = (Task) getIntent().getSerializableExtra("task_context");
-        // TODO - uncomment in PROD
         startWorkTimer(25 * 1000);
-//        startWorkTimer(25 * 60 * 1000);
+        // TODO - uncomment in PROD
+        //        startWorkTimer(25 * 60 * 1000);
+
+        pm = (PowerManager) getApplicationContext().getSystemService(Context.POWER_SERVICE);
+
+        sm = (SensorManager) this.getSystemService(SENSOR_SERVICE);
+        accSensor = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
+        mAccel = 0.00f;
+        mAccelCurrent = SensorManager.GRAVITY_EARTH;
+        mAccelLast = SensorManager.GRAVITY_EARTH;
+        accSensorListener = new SensorEventListener() {
+            @Override
+            public void onSensorChanged(SensorEvent event) {
+                if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+                    float[] mGravity = event.values.clone();
+                    float x = mGravity[0];
+                    float y = mGravity[1];
+                    float z = mGravity[2];
+                    mAccelLast = mAccelCurrent;
+                    mAccelCurrent = (float) Math.sqrt(x * x + y * y + z * z);
+                    float delta = mAccelCurrent - mAccelLast;
+                    mAccel = mAccel * 0.9f + delta;
+                    if (mAccel > 1) {
+                        Log.i("SensorTest", "Device has been moved. ");
+
+                        if (!pm.isScreenOn() && wakeLock == null) {
+                            wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP
+                                    | PowerManager.ON_AFTER_RELEASE, "SessionStartedWakeLock");
+                            wakeLock.acquire();
+                            Log.i("SensorTest", "WakeLock acquired.");
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onAccuracyChanged(Sensor sensor, int accuracy) {
+            }
+        };
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        releaseWakeLock();
+    }
+
+    private void releaseWakeLock() {
+        if (wakeLock != null) {
+            wakeLock.release();
+            wakeLock = null;
+            Log.i("SensorTest", "wakeLock released. ");
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sm.registerListener(accSensorListener,
+                accSensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     private void startWorkTimer(final int workLength) {
@@ -57,6 +134,8 @@ public class SessionStartedActivity extends Activity {
             @Override
             public void onFinish() {
                 timer.setText("0.0");
+                sm.unregisterListener(accSensorListener);
+                releaseWakeLock();
 
                 Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                 Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
@@ -73,6 +152,9 @@ public class SessionStartedActivity extends Activity {
 
     public void backButtonPressed(View view) {
         countDownTimer.cancel();
+        sm.unregisterListener(accSensorListener);
+        releaseWakeLock();
+
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
