@@ -45,7 +45,14 @@ public class MainActivity extends AppCompatActivity {
             readFromInternalStorage(INTERNAL_STORAGE_FILE);
         } else {
             tasks = new ArrayList<>();
-            tasks.add(new Task.Builder().build());
+            tasks.add(new Task.Builder()
+                    .setTitle("Task 1")
+                    .setDescription("This is example task!")
+                    .build());
+            tasks.add(new Task.Builder()
+                    .setTitle("Task 2")
+                    .setDescription("Mark this task as complete to get familiar with the app!")
+                    .build());
 //            saveToInternalStorage(INTERNAL_STORAGE_FILE);
         }
 
@@ -77,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 if (resultCode == Activity.RESULT_OK) {
                     Task resultTask = (Task) data.getSerializableExtra("task_context");
                     tasks.set(tasks.indexOf(taskContext), resultTask);
+                    myAdapter.notifyDataSetChanged();
                 }
             }
         }

@@ -34,9 +34,11 @@ public class TaskDetailsActivity extends Activity {
     private void passDataFromIntent() {
         taskDetailsTitle = (EditText) findViewById(R.id.etTaskDetailsTitle);
         taskDetailsDescription = (EditText) findViewById(R.id.etTaskDetailsDescription);
+//        taskDetailsStatus = (EditText) findViewById(R.id.etTaskDetailsStatus);
         taskContext = (Task) intent.getSerializableExtra("task_context");
 
         taskDetailsTitle.setText(taskContext.getTitle());
+        taskDetailsDescription.setText(taskContext.getDescription());
     }
 
 
