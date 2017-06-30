@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -23,7 +24,9 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/taskTitleLabel"
+        android:background="@android:color/transparent"
         android:ems="10"
+        android:hint="Enter title..."
         android:inputType="textPersonName"
         android:padding="20dp"
         android:text="" />
@@ -51,58 +54,62 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/taskDescriptionLabel"
+        android:background="@android:color/transparent"
         android:ems="10"
+        android:hint="Enter description..."
         android:inputType="textMultiLine"
         android:paddingBottom="10dp"
         android:paddingLeft="20dp"
         android:paddingTop="10dp" />
 
-    <Button
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/startSessionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:drawableLeft="@drawable/stopwatch_plus32"
-        android:drawablePadding="10dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="20dp"
         android:onClick="startSession"
-        android:padding="20dp"
-        android:text="@string/startSession" />
+        app:srcCompat="@drawable/stopwatch_plus32" />
 
-    <ImageButton
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/startSessionButton"
-        android:layout_alignTop="@+id/startSessionButton"
-        android:layout_marginEnd="15dp"
+        android:layout_alignTop="@+id/button2"
+        android:layout_gravity="bottom|end"
         android:layout_marginRight="15dp"
-        android:layout_toLeftOf="@+id/startSessionButton"
-        android:layout_toStartOf="@+id/startSessionButton"
-        android:background="?android:selectableItemBackground"
-        android:src="@drawable/success64" />
+        android:layout_toLeftOf="@+id/button2"
+        android:layout_toStartOf="@+id/button2"
+        app:srcCompat="@drawable/success64" />
 
-    <ImageButton
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/startSessionButton"
         android:layout_alignTop="@+id/startSessionButton"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp"
-        android:layout_toEndOf="@+id/startSessionButton"
-        android:layout_toRightOf="@+id/startSessionButton"
-        android:background="?android:selectableItemBackground"
-        android:src="@drawable/error64" />
+        android:layout_gravity="bottom|end"
+        android:layout_marginRight="15dp"
+        android:layout_toLeftOf="@+id/startSessionButton"
+        android:layout_toStartOf="@+id/startSessionButton"
+        android:onClick="asd"
+        app:srcCompat="@drawable/error64" />
 
-    <Button
+
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_above="@+id/startSessionButton"
+        android:layout_alignLeft="@+id/startSessionButton"
+        android:layout_alignStart="@+id/startSessionButton"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="15dp"
         android:onClick="saveChanges"
-        android:text="Button" />
+        app:srcCompat="@android:drawable/ic_menu_save" />
 
 </RelativeLayout>
