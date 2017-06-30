@@ -33,6 +33,7 @@ public class SessionStartedActivity extends Activity {
 
     private TextView timer;
     private CountDownTimer countDownTimer;
+    private int countDownTimerLeft;
     private Task taskContext;
     private Sensor accSensor;
     private float mAccel;
@@ -101,6 +102,19 @@ public class SessionStartedActivity extends Activity {
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("timerBase", countDownTimerLeft);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        countDownTimer.cancel();
+        startWorkTimer(savedInstanceState.getInt("timerBase"));
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         releaseWakeLock();
@@ -122,10 +136,12 @@ public class SessionStartedActivity extends Activity {
     }
 
     private void startWorkTimer(final int workLength) {
+        countDownTimerLeft = workLength;
         countDownTimer = new CountDownTimer(workLength, 1000) {
 
             @Override
             public void onTick(long millisUntilFinished) {
+                countDownTimerLeft -= 1000;
                 int seconds = (int) ((millisUntilFinished / 1000) % 60);
                 int minutes = (int) ((millisUntilFinished / 1000) / 60);
                 timer.setText(String.valueOf(minutes) + "." + String.valueOf(seconds));

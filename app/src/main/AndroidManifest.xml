@@ -20,6 +20,7 @@
 
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:label="Your Bobodoro tasks"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -31,6 +32,7 @@
 
         <activity
             android:name=".TaskDetailsActivity"
+            android:screenOrientation="portrait"
             android:label="@string/task_details_label" />
 
         <activity
@@ -43,6 +45,7 @@
 
         <activity
             android:name=".CreditsActivity"
+            android:screenOrientation="portrait"
             android:label="@string/credits_label" />
     </application>
 

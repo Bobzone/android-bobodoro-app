@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -18,6 +19,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +28,7 @@ import static com.example.epiobob.pomodoroapp.ResultCodes.*;
 public class MainActivity extends AppCompatActivity {
 
     private Task taskContext;
-    private List<Task> tasks;
+    private ArrayList<Task> tasks;
     private TaskAdapter myAdapter;
 
     private static final String INTERNAL_STORAGE_FILENAME = "bobodoroTasks.dat";
@@ -94,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 if (resultCode == REMOVE_TASK) {
                     tasks.remove(taskContext);
                 }
-                myAdapter.notifyDataSetChanged();
+//                myAdapter.notifyDataSetChanged();
             }
         }
     }
@@ -103,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         saveToInternalStorage(INTERNAL_STORAGE_FILE);
+        myAdapter.notifyDataSetChanged();
     }
 
     public void saveToInternalStorage(final File file) {
@@ -121,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             fis = openFileInput(file.getName());
             ObjectInputStream ois = new ObjectInputStream(fis);
-            tasks = (List<Task>) ois.readObject();
+            tasks = (ArrayList<Task>) ois.readObject();
             ois.close();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -146,6 +149,20 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+//    @Override
+//    protected void onSaveInstanceState(Bundle outState) {
+//        outState.putSerializable("tasks", tasks);
+//        Log.i("MSG", "saving Game");
+//        super.onSaveInstanceState(outState);
+//    }
+//
+//    @Override
+//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+//        super.onRestoreInstanceState(savedInstanceState);
+//        tasks = (ArrayList<Task>) savedInstanceState.getSerializable("tasks");
+//        myAdapter.notifyDataSetChanged();
+//    }
 
     public void goToCredits(MenuItem item) {
         Intent intent = new Intent(this, CreditsActivity.class);

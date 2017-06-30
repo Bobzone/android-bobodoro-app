@@ -26,6 +26,8 @@ public class BreakStartedActivity extends Activity {
 
     private TextView timer;
     private CountDownTimer countDownTimer;
+    private int countDownTimerLeft;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,10 +45,12 @@ public class BreakStartedActivity extends Activity {
     }
 
     private void startBreakTimer(final int breakLength) {
+        countDownTimerLeft = breakLength;
         countDownTimer = new CountDownTimer(breakLength, 1000) {
 
             @Override
             public void onTick(long millisUntilFinished) {
+                countDownTimerLeft -= 1000;
                 int seconds = (int) ((millisUntilFinished / 1000) % 60);
                 int minutes = (int) ((millisUntilFinished / 1000) / 60);
                 timer.setText(String.valueOf(minutes) + "." + String.valueOf(seconds));
@@ -80,6 +84,20 @@ public class BreakStartedActivity extends Activity {
     public void onBackPressed() {
         backButtonPressed(this.getCurrentFocus());
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        countDownTimer.cancel();
+        outState.putInt("timerBase", countDownTimerLeft);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        countDownTimer.cancel();
+        startBreakTimer(savedInstanceState.getInt("timerBase"));
     }
 
     public void showSessionFinishedAlertDialog(View view) {
