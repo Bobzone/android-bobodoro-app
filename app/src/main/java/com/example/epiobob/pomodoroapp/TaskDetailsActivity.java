@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import static com.example.epiobob.pomodoroapp.ResultCodes.*;
+
 /**
  * Created by epiobob on 2017-05-21.
  */
@@ -61,4 +63,10 @@ public class TaskDetailsActivity extends Activity {
     }
 
 
+    public void removeTask(View view) {
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("task_context", taskContext);
+        setResult(REMOVE_TASK, resultIntent);
+        finish();
+    }
 }

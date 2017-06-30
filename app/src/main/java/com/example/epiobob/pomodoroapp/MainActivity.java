@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -13,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import java.io.File;
@@ -24,9 +21,10 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.epiobob.pomodoroapp.ResultCodes.*;
+
 public class MainActivity extends AppCompatActivity {
 
-    private static final int SAVE_TASK_CHANGE = 113;
     private Task taskContext;
     private List<Task> tasks;
     private TaskAdapter myAdapter;
@@ -44,19 +42,7 @@ public class MainActivity extends AppCompatActivity {
         if (INTERNAL_STORAGE_FILE.exists()) {
             readFromInternalStorage(INTERNAL_STORAGE_FILE);
         } else {
-            tasks = new ArrayList<>();
-            tasks.add(new Task.Builder()
-                    .setTitle("Example Task 1")
-                    .setDescription("This is an example task!")
-                    .build());
-            tasks.add(new Task.Builder()
-                    .setTitle("Example Task 2")
-                    .setDescription("To start Pomodoro session for this task tap here and then start the timer with the timer button.")
-                    .build());
-            tasks.add(new Task.Builder()
-                    .setTitle("Example Task 3")
-                    .setDescription("You can mark these tasks as complete, delete them or edit them for further use! Try exploring the app yourself. Good luck!")
-                    .build());
+            initStartingTasks();
             saveToInternalStorage(INTERNAL_STORAGE_FILE);
         }
 
@@ -80,6 +66,22 @@ public class MainActivity extends AppCompatActivity {
         );
     }
 
+    private void initStartingTasks() {
+        tasks = new ArrayList<>();
+        tasks.add(new Task.Builder()
+                .setTitle("Example Task 1")
+                .setDescription("This is an example task!")
+                .build());
+        tasks.add(new Task.Builder()
+                .setTitle("Example Task 2")
+                .setDescription("To start Pomodoro session for this task tap here and then start the timer with the timer button.")
+                .build());
+        tasks.add(new Task.Builder()
+                .setTitle("Example Task 3")
+                .setDescription("You can mark these tasks as complete, delete them or edit them for further use! Try exploring the app yourself. Good luck!")
+                .build());
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -88,8 +90,11 @@ public class MainActivity extends AppCompatActivity {
                 if (resultCode == Activity.RESULT_OK) {
                     Task resultTask = (Task) data.getSerializableExtra("task_context");
                     tasks.set(tasks.indexOf(taskContext), resultTask);
-                    myAdapter.notifyDataSetChanged();
                 }
+                if (resultCode == REMOVE_TASK) {
+                    tasks.remove(taskContext);
+                }
+                myAdapter.notifyDataSetChanged();
             }
         }
     }
@@ -132,9 +137,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
