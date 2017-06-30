@@ -62,11 +62,18 @@ public class TaskDetailsActivity extends Activity {
         finish();
     }
 
-
     public void removeTask(View view) {
         Intent resultIntent = new Intent();
         resultIntent.putExtra("task_context", taskContext);
         setResult(REMOVE_TASK, resultIntent);
+        finish();
+    }
+
+    public void markAsComplete(View view) {
+        Intent resultIntent = new Intent();
+        taskContext.markAsComplete();
+        resultIntent.putExtra("task_context", taskContext);
+        setResult(ResultCodes.MASK_AS_COMPLETE_TASK, resultIntent);
         finish();
     }
 }

@@ -87,6 +87,7 @@
         android:scaleType="center"
         android:layout_toLeftOf="@+id/button2"
         android:layout_toStartOf="@+id/button2"
+        android:onClick="markAsComplete"
         app:srcCompat="@drawable/success32" />
 
     <android.support.design.widget.FloatingActionButton

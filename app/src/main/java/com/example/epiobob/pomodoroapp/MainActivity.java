@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 .build());
         tasks.add(new Task.Builder()
                 .setTitle("Example Task 3")
-                .setDescription("You can mark these tasks as complete, delete them or edit them for further use! Try exploring the app yourself. Good luck!")
+                .setDescription("You can mark these tasks as complete, delete them or edit them for further use! Good luck!")
                 .build());
     }
 
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case (SAVE_TASK_CHANGE): {
-                if (resultCode == Activity.RESULT_OK) {
+                if (resultCode == Activity.RESULT_OK || resultCode == ResultCodes.MASK_AS_COMPLETE_TASK) {
                     Task resultTask = (Task) data.getSerializableExtra("task_context");
                     tasks.set(tasks.indexOf(taskContext), resultTask);
                 }

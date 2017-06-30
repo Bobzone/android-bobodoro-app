@@ -32,10 +32,12 @@ class TaskAdapter extends ArrayAdapter<Task> {
         Task singleTaskItem = getItem(position);
         TextView taskTitle = (TextView) customView.findViewById(R.id.etTaskItemTitle);
         TextView taskDescription = (TextView) customView.findViewById(R.id.etTaskItemDescription);
+        TextView taskStatus = (TextView) customView.findViewById(R.id.etTaskItemStatus);
         ImageView taskIcon = (ImageView) customView.findViewById(R.id.ivTaskIcon);
 
         taskTitle.setText(singleTaskItem.getTitle());
         taskDescription.setText(singleTaskItem.getDescription());
+        taskStatus.setText(singleTaskItem.getStatus().getText());
         taskDescription.setTextColor(Color.argb(135, 0, 0, 0));
 
         taskIcon.setImageResource(R.drawable.tomato64);

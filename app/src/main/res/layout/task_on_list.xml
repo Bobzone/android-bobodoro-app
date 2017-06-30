@@ -41,7 +41,20 @@
             android:ems="10"
             android:focusable="false"
             android:inputType="textMultiLine"
-            android:maxLines="3"
+            android:maxLines="2"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/etTaskItemStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:clickable="false"
+            android:ems="10"
+            android:focusable="false"
+            android:inputType="textNoSuggestions"
             android:textSize="12sp" />
 
     </LinearLayout>

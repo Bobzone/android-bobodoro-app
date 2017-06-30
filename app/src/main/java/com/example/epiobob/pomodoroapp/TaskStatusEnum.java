@@ -6,9 +6,18 @@ package com.example.epiobob.pomodoroapp;
 
 enum TaskStatusEnum {
 
-    COMPLETE,
-    IN_PROGRESS,
-    ARCHIVED,
-    BLANK
+    COMPLETE("COMPLETE"),
+    IN_PROGRESS("IN PROGRESS"),
+    ARCHIVED("ARCHIVED"),
+    BLANK("");
 
+    private String text;
+
+    TaskStatusEnum(String text) {
+        this.text = text;
+    }
+
+    public String getText() {
+        return text;
+    }
 }
