@@ -46,14 +46,18 @@ public class MainActivity extends AppCompatActivity {
         } else {
             tasks = new ArrayList<>();
             tasks.add(new Task.Builder()
-                    .setTitle("Task 1")
-                    .setDescription("This is example task!")
+                    .setTitle("Example Task 1")
+                    .setDescription("This is an example task!")
                     .build());
             tasks.add(new Task.Builder()
-                    .setTitle("Task 2")
-                    .setDescription("Mark this task as complete to get familiar with the app!")
+                    .setTitle("Example Task 2")
+                    .setDescription("To start Pomodoro session for this task tap here and then start the timer with the timer button.")
                     .build());
-//            saveToInternalStorage(INTERNAL_STORAGE_FILE);
+            tasks.add(new Task.Builder()
+                    .setTitle("Example Task 3")
+                    .setDescription("You can mark these tasks as complete, delete them or edit them for further use! Try exploring the app yourself. Good luck!")
+                    .build());
+            saveToInternalStorage(INTERNAL_STORAGE_FILE);
         }
 
         myAdapter = new TaskAdapter(this, tasks);

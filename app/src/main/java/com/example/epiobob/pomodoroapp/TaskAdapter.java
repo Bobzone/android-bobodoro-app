@@ -1,6 +1,7 @@
 package com.example.epiobob.pomodoroapp;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -29,10 +30,14 @@ class TaskAdapter extends ArrayAdapter<Task> {
         View customView = inflater.inflate(R.layout.task_on_list, parent, false);
 
         Task singleTaskItem = getItem(position);
-        TextView taskText = (TextView) customView.findViewById(R.id.etTaskItem);
+        TextView taskTitle = (TextView) customView.findViewById(R.id.etTaskItemTitle);
+        TextView taskDescription = (TextView) customView.findViewById(R.id.etTaskItemDescription);
         ImageView taskIcon = (ImageView) customView.findViewById(R.id.ivTaskIcon);
 
-        taskText.setText(singleTaskItem.getTitle());
+        taskTitle.setText(singleTaskItem.getTitle());
+        taskDescription.setText(singleTaskItem.getDescription());
+        taskDescription.setTextColor(Color.argb(135, 0, 0, 0));
+
         taskIcon.setImageResource(R.drawable.tomato64);
 
         return customView;
