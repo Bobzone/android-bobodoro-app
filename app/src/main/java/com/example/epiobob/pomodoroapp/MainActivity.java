@@ -4,14 +4,18 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 
 import java.io.File;
@@ -19,9 +23,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.example.epiobob.pomodoroapp.ResultCodes.*;
 
@@ -33,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String INTERNAL_STORAGE_FILENAME = "bobodoroTasks.dat";
     private static final File INTERNAL_STORAGE_FILE = new File(INTERNAL_STORAGE_FILENAME);
+    private FloatingActionButton mainFab;
+    private FloatingActionButton addTaskFab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +63,14 @@ public class MainActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent intent = new Intent(MainActivity.this, TaskDetailsActivity.class);
                         taskContext = (Task) parent.getItemAtPosition(position);
-//                        TODO - this might work - refactor material
-//                        intent.putExtra("task_context", tasks.get(tasks.indexOf(taskContext)));
                         intent.putExtra("task_context", taskContext);
                         startActivityForResult(intent, SAVE_TASK_CHANGE);
                     }
                 }
         );
+
+        mainFab = (FloatingActionButton) findViewById(R.id.fab);
+        addTaskFab = (FloatingActionButton) findViewById(R.id.fab2);
     }
 
     private void initStartingTasks() {
@@ -150,31 +155,33 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-//    @Override
-//    protected void onSaveInstanceState(Bundle outState) {
-//        outState.putSerializable("tasks", tasks);
-//        Log.i("MSG", "saving Game");
-//        super.onSaveInstanceState(outState);
-//    }
-//
-//    @Override
-//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-//        super.onRestoreInstanceState(savedInstanceState);
-//        tasks = (ArrayList<Task>) savedInstanceState.getSerializable("tasks");
-//        myAdapter.notifyDataSetChanged();
-//    }
-
     public void goToCredits(MenuItem item) {
         Intent intent = new Intent(this, CreditsActivity.class);
         startActivity(intent);
     }
 
-    public void createNewTask(View view) {
-        Intent intent = new Intent(MainActivity.this, TaskDetailsActivity.class);
-        taskContext = new Task.Builder().build();
-        tasks.add(taskContext);
-        intent.putExtra("task_context", taskContext);
-        startActivityForResult(intent, SAVE_TASK_CHANGE);
+    public void mainFabClicked(View view) {
+        Animation show_fab_1 = AnimationUtils.loadAnimation(getApplication(), R.anim.add_fab_show);
+
+        View addTaskFabHint = findViewById(R.id.fab2_hint);
+
+        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) addTaskFab.getLayoutParams();
+        layoutParams.bottomMargin += (int) (addTaskFab.getHeight() * 1.4);
+        addTaskFab.setLayoutParams(layoutParams);
+        addTaskFab.startAnimation(show_fab_1);
+        addTaskFab.setClickable(true);
+
+        FrameLayout.LayoutParams layoutParamsHint = (FrameLayout.LayoutParams) addTaskFabHint.getLayoutParams();
+        layoutParamsHint.bottomMargin += (int) (addTaskFab.getHeight() * 1.4);
+        addTaskFabHint.setLayoutParams(layoutParamsHint);
+        addTaskFabHint.startAnimation(show_fab_1);
+
+
+//        Intent intent = new Intent(MainActivity.this, TaskDetailsActivity.class);
+//        taskContext = new Task.Builder().build();
+//        tasks.add(taskContext);
+//        intent.putExtra("task_context", taskContext);
+//        startActivityForResult(intent, SAVE_TASK_CHANGE);
         Log.i("MainActivity", "Creating new task...");
     }
 }
