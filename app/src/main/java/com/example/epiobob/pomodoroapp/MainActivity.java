@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 if (resultCode == REMOVE_TASK) {
                     tasks.remove(taskContext);
                 }
-//                myAdapter.notifyDataSetChanged();
+                myAdapter.notifyDataSetChanged();
             }
         }
     }
