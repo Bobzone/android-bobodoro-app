@@ -17,6 +17,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -165,14 +166,15 @@ public class MainActivity extends AppCompatActivity {
 
         View addTaskFabHint = findViewById(R.id.fab2_hint);
 
-        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) addTaskFab.getLayoutParams();
+
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) addTaskFab.getLayoutParams();
         layoutParams.bottomMargin += (int) (addTaskFab.getHeight() * 1.4);
         addTaskFab.setLayoutParams(layoutParams);
         addTaskFab.startAnimation(show_fab_1);
         addTaskFab.setClickable(true);
 
-        FrameLayout.LayoutParams layoutParamsHint = (FrameLayout.LayoutParams) addTaskFabHint.getLayoutParams();
-        layoutParamsHint.bottomMargin += (int) (addTaskFab.getHeight() * 1.4);
+        RelativeLayout.LayoutParams layoutParamsHint = (RelativeLayout.LayoutParams) addTaskFabHint.getLayoutParams();
+        layoutParamsHint.bottomMargin += (int) (addTaskFab.getHeight() * 0.20);
         addTaskFabHint.setLayoutParams(layoutParamsHint);
         addTaskFabHint.startAnimation(show_fab_1);
 
