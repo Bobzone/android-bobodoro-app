@@ -1,5 +1,6 @@
 package com.example.epiobob.pomodoroapp.db;
 
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.epiobob.pomodoroapp.Task;
@@ -25,4 +26,6 @@ public interface DbHelper {
     String getDatabaseName();
 
     boolean addNew(SQLiteDatabase db, Task task);
+
+    Cursor getAll(SQLiteDatabase db, String tableName, String[] columns);
 }

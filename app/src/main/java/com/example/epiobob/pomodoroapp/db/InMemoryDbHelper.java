@@ -1,6 +1,7 @@
 package com.example.epiobob.pomodoroapp.db;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -39,7 +40,7 @@ public class InMemoryDbHelper extends SQLiteOpenHelper implements DbHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        throw new UnsupportedOperationException("Not yet implemented. ");
     }
 
     @Override
@@ -47,5 +48,10 @@ public class InMemoryDbHelper extends SQLiteOpenHelper implements DbHelper {
         Log.d(TAG, "Inserting new record to in-memory database: " + task);
         database.put(1L, task);
         return true;
+    }
+
+    @Override
+    public Cursor getAll(SQLiteDatabase db, String tableName, String[] columns) {
+        throw new UnsupportedOperationException("Not yet implemented. ");
     }
 }

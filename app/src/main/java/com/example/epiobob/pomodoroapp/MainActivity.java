@@ -12,14 +12,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.example.epiobob.pomodoroapp.db.DbHelper;
 import com.example.epiobob.pomodoroapp.db.SqLiteDbHelper;
@@ -31,7 +28,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-import static com.example.epiobob.pomodoroapp.ResultCodes.*;
+import static com.example.epiobob.pomodoroapp.ResultCodes.REMOVE_TASK;
+import static com.example.epiobob.pomodoroapp.ResultCodes.SAVE_TASK_CHANGE;
 
 public class MainActivity extends AppCompatActivity {
 
