@@ -34,4 +34,9 @@ public class SqLiteDbHelper extends SQLiteOpenHelper implements DbHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
+
+    @Override
+    public SQLiteDatabase getWritableDatabase() {
+        return super.getWritableDatabase();
+    }
 }

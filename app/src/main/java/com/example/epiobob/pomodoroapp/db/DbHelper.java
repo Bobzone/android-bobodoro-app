@@ -1,5 +1,7 @@
 package com.example.epiobob.pomodoroapp.db;
 
+import android.database.sqlite.SQLiteDatabase;
+
 /**
  * Created by epiobob on 2018-02-26.
  */
@@ -15,4 +17,6 @@ public interface DbHelper {
     String DESCRIPTION = "description";
     String STATUS = "status";
     String[] columns = {_ID, TITLE, DESCRIPTION, STATUS};
+
+    SQLiteDatabase getWritableDatabase();
 }

@@ -21,6 +21,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.example.epiobob.pomodoroapp.db.DbHelper;
+import com.example.epiobob.pomodoroapp.db.SqLiteDbHelper;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -42,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton mainFab;
     private FloatingActionButton addTaskFab;
 
-    private final SQLiteDatabase sqLiteDatabase = null;
-    private final DbHelper dbHelper = null;
+    private SQLiteDatabase sqLiteDatabase = null;
+    private DbHelper dbHelper = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
         mainFab = (FloatingActionButton) findViewById(R.id.fab);
         addTaskFab = (FloatingActionButton) findViewById(R.id.fab2);
 
+        dbHelper = new SqLiteDbHelper(this);
+        sqLiteDatabase = dbHelper.getWritableDatabase();
     }
 
     private void initStartingTasks() {
