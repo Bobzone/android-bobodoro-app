@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.epiobob.pomodoroapp.db.DbHelper;
 import com.example.epiobob.pomodoroapp.db.SqLiteDbHelper;
@@ -33,6 +34,8 @@ import java.util.ArrayList;
 import static com.example.epiobob.pomodoroapp.ResultCodes.*;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     private Task taskContext;
     private ArrayList<Task> tasks;
@@ -82,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
         dbHelper = new SqLiteDbHelper(this);
         sqLiteDatabase = dbHelper.getWritableDatabase();
+        Log.d(TAG, "Database " + dbHelper.getDatabaseName() + " wired to main activity. ");
     }
 
     private void initStartingTasks() {

@@ -1,9 +1,12 @@
 package com.example.epiobob.pomodoroapp.db;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+
+import com.example.epiobob.pomodoroapp.Task;
 
 /**
  * Created by epiobob on 2018-02-26.
@@ -36,7 +39,14 @@ public class SqLiteDbHelper extends SQLiteOpenHelper implements DbHelper {
     }
 
     @Override
-    public SQLiteDatabase getWritableDatabase() {
-        return super.getWritableDatabase();
+    public boolean addNew(SQLiteDatabase db, Task task) {
+        ContentValues cv = new ContentValues();
+        cv.put(columns[1], task.getTitle());
+        cv.put(columns[2], task.getDescription());
+        cv.put(columns[3], task.getStatus().getText());
+
+        Log.d(TAG, "Inserting new record to database: " + task);
+        db.insert(TABLE_NAME, null, cv);
+        return true;
     }
 }

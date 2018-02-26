@@ -43,7 +43,9 @@ public class InMemoryDbHelper extends SQLiteOpenHelper implements DbHelper {
     }
 
     @Override
-    public SQLiteDatabase getWritableDatabase() {
-        return super.getWritableDatabase();
+    public boolean addNew(SQLiteDatabase db, Task task) {
+        Log.d(TAG, "Inserting new record to in-memory database: " + task);
+        database.put(1L, task);
+        return true;
     }
 }
