@@ -26,7 +26,7 @@ public class Task implements Serializable {
         this.status = COMPLETE;
     }
 
-    static class Builder {
+    public static class Builder {
         private String title = "New task...";
         private String description = "New description...";
         private TaskStatusEnum status = IN_PROGRESS;

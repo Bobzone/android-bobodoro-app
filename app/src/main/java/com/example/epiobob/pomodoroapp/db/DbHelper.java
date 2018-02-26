@@ -5,6 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.epiobob.pomodoroapp.Task;
 
+import java.util.List;
+
 /**
  * Created by epiobob on 2018-02-26.
  */
@@ -27,5 +29,5 @@ public interface DbHelper {
 
     boolean addNew(SQLiteDatabase db, Task task);
 
-    Cursor getAll(SQLiteDatabase db, String tableName, String[] columns);
+    List<Task> getAll(SQLiteDatabase db);
 }

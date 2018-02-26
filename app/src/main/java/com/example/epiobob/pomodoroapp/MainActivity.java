@@ -1,7 +1,6 @@
 package com.example.epiobob.pomodoroapp;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -22,11 +21,7 @@ import com.example.epiobob.pomodoroapp.db.DbHelper;
 import com.example.epiobob.pomodoroapp.db.SqLiteDbHelper;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
+import java.util.List;
 
 import static com.example.epiobob.pomodoroapp.ResultCodes.REMOVE_TASK;
 import static com.example.epiobob.pomodoroapp.ResultCodes.SAVE_TASK_CHANGE;
@@ -36,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private Task taskContext;
-    private ArrayList<Task> tasks;
+    private List<Task> tasks;
     private TaskAdapter myAdapter;
 
     private static final String INTERNAL_STORAGE_FILENAME = "bobodoroTasks.dat";
@@ -54,13 +49,22 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if (INTERNAL_STORAGE_FILE.exists()) {
-            readFromInternalStorage(INTERNAL_STORAGE_FILE);
-        } else {
-            initStartingTasks();
-            saveToInternalStorage(INTERNAL_STORAGE_FILE);
-        }
+//        if (INTERNAL_STORAGE_FILE.exists()) {
+//            readFromInternalStorage(INTERNAL_STORAGE_FILE);
+//        } else {
+//            initStartingTasks();
+//            saveToInternalStorage(INTERNAL_STORAGE_FILE);
+//        }
 
+        mainFab = (FloatingActionButton) findViewById(R.id.fab);
+        addTaskFab = (FloatingActionButton) findViewById(R.id.fab2);
+
+        dbHelper = new SqLiteDbHelper(this);
+        sqLiteDatabase = dbHelper.getWritableDatabase();
+        Log.d(TAG, "Database " + dbHelper.getDatabaseName() + " wired to main activity. ");
+
+        initStartingTasks();
+        tasks = dbHelper.getAll(sqLiteDatabase);
         myAdapter = new TaskAdapter(this, tasks);
 
         ListView rootListView = (ListView) findViewById(R.id.rootListView);
@@ -78,25 +82,20 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
-        mainFab = (FloatingActionButton) findViewById(R.id.fab);
-        addTaskFab = (FloatingActionButton) findViewById(R.id.fab2);
-
-        dbHelper = new SqLiteDbHelper(this);
-        sqLiteDatabase = dbHelper.getWritableDatabase();
-        Log.d(TAG, "Database " + dbHelper.getDatabaseName() + " wired to main activity. ");
     }
 
     private void initStartingTasks() {
-        tasks = new ArrayList<>();
-        tasks.add(new Task.Builder()
+        dbHelper.addNew(sqLiteDatabase, new Task.Builder()
                 .setTitle("Example Task 1")
                 .setDescription("This is an example task!")
                 .build());
-        tasks.add(new Task.Builder()
+
+        dbHelper.addNew(sqLiteDatabase, new Task.Builder()
                 .setTitle("Example Task 2")
                 .setDescription("To start Pomodoro session for this task tap here and then start the timer with the timer button.")
                 .build());
-        tasks.add(new Task.Builder()
+
+        dbHelper.addNew(sqLiteDatabase, new Task.Builder()
                 .setTitle("Example Task 3")
                 .setDescription("You can mark these tasks as complete, delete them or edit them for further use! Good luck!")
                 .build());
@@ -122,31 +121,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        saveToInternalStorage(INTERNAL_STORAGE_FILE);
+//        saveToInternalStorage(INTERNAL_STORAGE_FILE);
         myAdapter.notifyDataSetChanged();
-    }
-
-    public void saveToInternalStorage(final File file) {
-        try {
-            ObjectOutputStream out = new ObjectOutputStream(openFileOutput(file.getName(), Context.MODE_PRIVATE));
-            out.writeObject(tasks);
-            Log.i("MainActivity", "Saving to internal storage...");
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void readFromInternalStorage(final File file) {
-        FileInputStream fis;
-        try {
-            fis = openFileInput(file.getName());
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            tasks = (ArrayList<Task>) ois.readObject();
-            ois.close();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -189,13 +165,6 @@ public class MainActivity extends AppCompatActivity {
         layoutParamsHint.bottomMargin += (int) (addTaskFab.getHeight() * 0.20);
         addTaskFabHint.setLayoutParams(layoutParamsHint);
         addTaskFabHint.startAnimation(show_fab_1);
-
-
-//        Intent intent = new Intent(MainActivity.this, TaskDetailsActivity.class);
-//        taskContext = new Task.Builder().build();
-//        tasks.add(taskContext);
-//        intent.putExtra("task_context", taskContext);
-//        startActivityForResult(intent, SAVE_TASK_CHANGE);
         Log.i("MainActivity", "Creating new task...");
     }
 }

@@ -37,7 +37,7 @@ class TaskAdapter extends ArrayAdapter<Task> {
 
         taskTitle.setText(singleTaskItem.getTitle());
         taskDescription.setText(singleTaskItem.getDescription());
-        taskStatus.setText(singleTaskItem.getStatus().getText());
+        taskStatus.setText(singleTaskItem.getStatus().name());
         taskDescription.setTextColor(Color.argb(135, 0, 0, 0));
 
         taskIcon.setImageResource(R.drawable.tomato64);

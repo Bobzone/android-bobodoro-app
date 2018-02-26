@@ -1,7 +1,6 @@
 package com.example.epiobob.pomodoroapp.db;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -9,6 +8,7 @@ import android.util.Log;
 import com.example.epiobob.pomodoroapp.Task;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -51,7 +51,7 @@ public class InMemoryDbHelper extends SQLiteOpenHelper implements DbHelper {
     }
 
     @Override
-    public Cursor getAll(SQLiteDatabase db, String tableName, String[] columns) {
+    public List<Task> getAll(SQLiteDatabase db) {
         throw new UnsupportedOperationException("Not yet implemented. ");
     }
 }
