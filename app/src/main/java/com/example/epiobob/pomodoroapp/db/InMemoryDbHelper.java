@@ -20,7 +20,7 @@ public class InMemoryDbHelper extends SQLiteOpenHelper implements DbHelper {
 
     private Context context;
 
-    private Map<Long, Task> database
+    private Map<Long, Task> database;
 
     public InMemoryDbHelper(Context context) {
         super(context, DB_NAME, null, VERSION);
