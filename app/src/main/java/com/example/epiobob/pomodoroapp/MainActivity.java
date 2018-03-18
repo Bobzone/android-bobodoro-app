@@ -51,19 +51,12 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        if (INTERNAL_STORAGE_FILE.exists()) {
-//            readFromInternalStorage(INTERNAL_STORAGE_FILE);
-//        } else {
-//            initStartingTasks();
-//            saveToInternalStorage(INTERNAL_STORAGE_FILE);
-//        }
-
         mainFab = (FloatingActionButton) findViewById(R.id.fab);
         addTaskFab = (FloatingActionButton) findViewById(R.id.fab2);
 
         dbHelper = new SqLiteDbHelper(this);
         sqLiteDatabase = dbHelper.getWritableDatabase();
-        Log.d(TAG, "Database " + dbHelper.getDatabaseName() + " wired to main activity. ");
+        Log.d(TAG, "Database " + dbHelper.getData`baseName() + " wired to main activity. ");
 
         tasks = dbHelper.getAll(sqLiteDatabase);
         myAdapter = new TaskAdapter(this, tasks);
