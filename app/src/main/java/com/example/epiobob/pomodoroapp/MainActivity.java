@@ -126,43 +126,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void mainFabClicked(View view) {
+        View addTaskFabHint = findViewById(R.id.fab2_hint);
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) addTaskFab.getLayoutParams();
+        RelativeLayout.LayoutParams layoutParamsHint = (RelativeLayout.LayoutParams) addTaskFabHint.getLayoutParams();
+        addTaskFabHint.setLayoutParams(layoutParamsHint);
+        addTaskFab.setLayoutParams(layoutParams);
+        addTaskFab.setClickable(true);
+        Animation show_fab_1;
+
         if (!mainFabClicked) {
-            Animation show_fab_1 = AnimationUtils.loadAnimation(getApplication(), R.anim.add_fab_show);
-
-            View addTaskFabHint = findViewById(R.id.fab2_hint);
-            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) addTaskFab.getLayoutParams();
+            show_fab_1 = AnimationUtils.loadAnimation(getApplication(), R.anim.add_fab_show);
             layoutParams.bottomMargin += (int) (addTaskFab.getHeight() * 1.4);
-            addTaskFab.setLayoutParams(layoutParams);
-            addTaskFab.startAnimation(show_fab_1);
-            addTaskFab.setClickable(true);
-
-            RelativeLayout.LayoutParams layoutParamsHint = (RelativeLayout.LayoutParams) addTaskFabHint.getLayoutParams();
             layoutParamsHint.bottomMargin += (int) (addTaskFab.getHeight() * 0.20);
-            addTaskFabHint.setLayoutParams(layoutParamsHint);
-            addTaskFabHint.startAnimation(show_fab_1);
-            Log.i("MainActivity", "Creating new task...");
-
-            mainFabClicked = !mainFabClicked;
         } else {
-            // fold the buttons back
-            mainFabClicked = !mainFabClicked;
-
-            Animation show_fab_1 = AnimationUtils.loadAnimation(getApplication(), R.anim.add_fab_hide);
-            View addTaskFabHint = findViewById(R.id.fab2_hint);
-
-            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) addTaskFab.getLayoutParams();
+            show_fab_1 = AnimationUtils.loadAnimation(getApplication(), R.anim.add_fab_hide);
             layoutParams.bottomMargin -= (int) (addTaskFab.getHeight() * 1.4);
-            addTaskFab.setLayoutParams(layoutParams);
-            addTaskFab.startAnimation(show_fab_1);
-            addTaskFab.setClickable(true);
-
-            RelativeLayout.LayoutParams layoutParamsHint = (RelativeLayout.LayoutParams) addTaskFabHint.getLayoutParams();
             layoutParamsHint.bottomMargin -= (int) (addTaskFab.getHeight() * 0.20);
-            addTaskFabHint.setLayoutParams(layoutParamsHint);
-            addTaskFabHint.startAnimation(show_fab_1);
-            addTaskFabHint.setVisibility(View.GONE);
+        }
 
+        addTaskFab.startAnimation(show_fab_1);
+        addTaskFabHint.startAnimation(show_fab_1);
+
+        if (mainFabClicked) {
             addTaskFabHint.clearAnimation();
         }
+        mainFabClicked = !mainFabClicked;
     }
 }
