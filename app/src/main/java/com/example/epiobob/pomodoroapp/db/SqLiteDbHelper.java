@@ -21,11 +21,8 @@ public class SqLiteDbHelper extends SQLiteOpenHelper implements DbHelper {
 
     private static final String TAG = SqLiteDbHelper.class.getSimpleName();
 
-    private Context context;
-
     public SqLiteDbHelper(Context context) {
         super(context, DB_NAME, null, VERSION);
-        this.context = context;
     }
 
     @Override
@@ -36,6 +33,7 @@ public class SqLiteDbHelper extends SQLiteOpenHelper implements DbHelper {
                 + TITLE + " TEXT NOT NULL, "
                 + DESCRIPTION + " TEXT NOT NULL, "
                 + STATUS + " TEXT NOT NULL); ");
+        initDbWithStartData(db);
     }
 
     @Override
@@ -75,5 +73,22 @@ public class SqLiteDbHelper extends SQLiteOpenHelper implements DbHelper {
         }
 
         return resultSet;
+    }
+
+    private void initDbWithStartData(SQLiteDatabase sqLiteDatabase) {
+        addNew(sqLiteDatabase, new Task.Builder()
+                .setTitle("Example Task 1")
+                .setDescription("This is an example task!")
+                .build());
+
+        addNew(sqLiteDatabase, new Task.Builder()
+                .setTitle("Example Task 2")
+                .setDescription("To start Pomodoro session for this task tap here and then start the timer with the timer button.")
+                .build());
+
+        addNew(sqLiteDatabase, new Task.Builder()
+                .setTitle("Example Task 3")
+                .setDescription("You can mark these tasks as complete, delete them or edit them for further use! Good luck!")
+                .build());
     }
 }

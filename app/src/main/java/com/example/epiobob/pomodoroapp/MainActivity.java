@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
     private SQLiteDatabase sqLiteDatabase = null;
     private DbHelper dbHelper = null;
 
+    private boolean mainFabClicked = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
         sqLiteDatabase = dbHelper.getWritableDatabase();
         Log.d(TAG, "Database " + dbHelper.getDatabaseName() + " wired to main activity. ");
 
-        initStartingTasks();
         tasks = dbHelper.getAll(sqLiteDatabase);
         myAdapter = new TaskAdapter(this, tasks);
 
@@ -81,24 +82,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
-
-    }
-
-    private void initStartingTasks() {
-        dbHelper.addNew(sqLiteDatabase, new Task.Builder()
-                .setTitle("Example Task 1")
-                .setDescription("This is an example task!")
-                .build());
-
-        dbHelper.addNew(sqLiteDatabase, new Task.Builder()
-                .setTitle("Example Task 2")
-                .setDescription("To start Pomodoro session for this task tap here and then start the timer with the timer button.")
-                .build());
-
-        dbHelper.addNew(sqLiteDatabase, new Task.Builder()
-                .setTitle("Example Task 3")
-                .setDescription("You can mark these tasks as complete, delete them or edit them for further use! Good luck!")
-                .build());
     }
 
     @Override
@@ -150,21 +133,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void mainFabClicked(View view) {
-        Animation show_fab_1 = AnimationUtils.loadAnimation(getApplication(), R.anim.add_fab_show);
+        if (!mainFabClicked) {
+            Animation show_fab_1 = AnimationUtils.loadAnimation(getApplication(), R.anim.add_fab_show);
 
-        View addTaskFabHint = findViewById(R.id.fab2_hint);
+            View addTaskFabHint = findViewById(R.id.fab2_hint);
 
 
-        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) addTaskFab.getLayoutParams();
-        layoutParams.bottomMargin += (int) (addTaskFab.getHeight() * 1.4);
-        addTaskFab.setLayoutParams(layoutParams);
-        addTaskFab.startAnimation(show_fab_1);
-        addTaskFab.setClickable(true);
+            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) addTaskFab.getLayoutParams();
+            layoutParams.bottomMargin += (int) (addTaskFab.getHeight() * 1.4);
+            addTaskFab.setLayoutParams(layoutParams);
+            addTaskFab.startAnimation(show_fab_1);
+            addTaskFab.setClickable(true);
 
-        RelativeLayout.LayoutParams layoutParamsHint = (RelativeLayout.LayoutParams) addTaskFabHint.getLayoutParams();
-        layoutParamsHint.bottomMargin += (int) (addTaskFab.getHeight() * 0.20);
-        addTaskFabHint.setLayoutParams(layoutParamsHint);
-        addTaskFabHint.startAnimation(show_fab_1);
-        Log.i("MainActivity", "Creating new task...");
+            RelativeLayout.LayoutParams layoutParamsHint = (RelativeLayout.LayoutParams) addTaskFabHint.getLayoutParams();
+            layoutParamsHint.bottomMargin += (int) (addTaskFab.getHeight() * 0.20);
+            addTaskFabHint.setLayoutParams(layoutParamsHint);
+            addTaskFabHint.startAnimation(show_fab_1);
+            Log.i("MainActivity", "Creating new task...");
+
+            mainFabClicked = !mainFabClicked;
+        } else {
+            // fold the buttons back
+        }
     }
 }
