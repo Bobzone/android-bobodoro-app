@@ -130,8 +130,6 @@ public class MainActivity extends AppCompatActivity {
             Animation show_fab_1 = AnimationUtils.loadAnimation(getApplication(), R.anim.add_fab_show);
 
             View addTaskFabHint = findViewById(R.id.fab2_hint);
-
-
             RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) addTaskFab.getLayoutParams();
             layoutParams.bottomMargin += (int) (addTaskFab.getHeight() * 1.4);
             addTaskFab.setLayoutParams(layoutParams);
@@ -147,6 +145,24 @@ public class MainActivity extends AppCompatActivity {
             mainFabClicked = !mainFabClicked;
         } else {
             // fold the buttons back
+            mainFabClicked = !mainFabClicked;
+
+            Animation show_fab_1 = AnimationUtils.loadAnimation(getApplication(), R.anim.add_fab_hide);
+            View addTaskFabHint = findViewById(R.id.fab2_hint);
+
+            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) addTaskFab.getLayoutParams();
+            layoutParams.bottomMargin -= (int) (addTaskFab.getHeight() * 1.4);
+            addTaskFab.setLayoutParams(layoutParams);
+            addTaskFab.startAnimation(show_fab_1);
+            addTaskFab.setClickable(true);
+
+            RelativeLayout.LayoutParams layoutParamsHint = (RelativeLayout.LayoutParams) addTaskFabHint.getLayoutParams();
+            layoutParamsHint.bottomMargin -= (int) (addTaskFab.getHeight() * 0.20);
+            addTaskFabHint.setLayoutParams(layoutParamsHint);
+            addTaskFabHint.startAnimation(show_fab_1);
+            addTaskFabHint.setVisibility(View.GONE);
+
+            addTaskFabHint.clearAnimation();
         }
     }
 }
