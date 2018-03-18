@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         dbHelper = new SqLiteDbHelper(this);
         sqLiteDatabase = dbHelper.getWritableDatabase();
-        Log.d(TAG, "Database " + dbHelper.getData`baseName() + " wired to main activity. ");
+        Log.d(TAG, "Database " + dbHelper.getDatabaseName() + " wired to main activity. ");
 
         tasks = dbHelper.getAll(sqLiteDatabase);
         myAdapter = new TaskAdapter(this, tasks);
