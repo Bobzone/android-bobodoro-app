@@ -27,7 +27,9 @@ public interface DbHelper {
 
     String getDatabaseName();
 
-    boolean addNew(SQLiteDatabase db, Task task);
+    boolean addNew(Task task);
 
-    List<Task> getAll(SQLiteDatabase db);
+    List<Task> getAll();
+
+    void setOperatingDatabase(SQLiteDatabase db);
 }

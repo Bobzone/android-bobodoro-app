@@ -20,6 +20,7 @@ import java.util.List;
 public class SqLiteDbHelper extends SQLiteOpenHelper implements DbHelper {
 
     private static final String TAG = SqLiteDbHelper.class.getSimpleName();
+    private SQLiteDatabase db;
 
     public SqLiteDbHelper(Context context) {
         super(context, DB_NAME, null, VERSION);
@@ -28,12 +29,13 @@ public class SqLiteDbHelper extends SQLiteOpenHelper implements DbHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         Log.d(TAG, "Creating tasks db now. ");
-        db.execSQL("CREATE TABLE " + TABLE_NAME + "("
+        this.db = db;
+        this.db.execSQL("CREATE TABLE " + TABLE_NAME + "("
                 + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + TITLE + " TEXT NOT NULL, "
                 + DESCRIPTION + " TEXT NOT NULL, "
                 + STATUS + " TEXT NOT NULL); ");
-        initDbWithStartData(db);
+        initDbWithStartData();
     }
 
     @Override
@@ -42,7 +44,7 @@ public class SqLiteDbHelper extends SQLiteOpenHelper implements DbHelper {
     }
 
     @Override
-    public boolean addNew(SQLiteDatabase db, Task task) {
+    public boolean addNew(Task task) {
         ContentValues cv = new ContentValues();
         cv.put(columns[1], task.getTitle());
         cv.put(columns[2], task.getDescription());
@@ -54,7 +56,7 @@ public class SqLiteDbHelper extends SQLiteOpenHelper implements DbHelper {
     }
 
     @Override
-    public List<Task> getAll(SQLiteDatabase db) {
+    public List<Task> getAll() {
         List<Task> resultSet = new ArrayList<>();
         Cursor query = db.query(TABLE_NAME, columns, null, null, null, null, null);
 
@@ -75,18 +77,23 @@ public class SqLiteDbHelper extends SQLiteOpenHelper implements DbHelper {
         return resultSet;
     }
 
-    private void initDbWithStartData(SQLiteDatabase sqLiteDatabase) {
-        addNew(sqLiteDatabase, new Task.Builder()
+    @Override
+    public void setOperatingDatabase(SQLiteDatabase db) {
+        this.db = db;
+    }
+
+    private void initDbWithStartData() {
+        addNew(new Task.Builder()
                 .setTitle("Example Task 1")
                 .setDescription("This is an example task!")
                 .build());
 
-        addNew(sqLiteDatabase, new Task.Builder()
+        addNew(new Task.Builder()
                 .setTitle("Example Task 2")
                 .setDescription("To start Pomodoro session for this task tap here and then start the timer with the timer button.")
                 .build());
 
-        addNew(sqLiteDatabase, new Task.Builder()
+        addNew(new Task.Builder()
                 .setTitle("Example Task 3")
                 .setDescription("You can mark these tasks as complete, delete them or edit them for further use! Good luck!")
                 .build());

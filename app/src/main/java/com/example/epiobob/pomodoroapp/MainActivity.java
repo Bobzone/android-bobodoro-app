@@ -55,10 +55,10 @@ public class MainActivity extends AppCompatActivity {
         addTaskFab = (FloatingActionButton) findViewById(R.id.fab2);
 
         dbHelper = new SqLiteDbHelper(this);
-        sqLiteDatabase = dbHelper.getWritableDatabase();
+        dbHelper.setOperatingDatabase(dbHelper.getWritableDatabase());
         Log.d(TAG, "Database " + dbHelper.getDatabaseName() + " wired to main activity. ");
 
-        tasks = dbHelper.getAll(sqLiteDatabase);
+        tasks = dbHelper.getAll();
         myAdapter = new TaskAdapter(this, tasks);
 
         ListView rootListView = (ListView) findViewById(R.id.rootListView);
@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //TODO: fix this now
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

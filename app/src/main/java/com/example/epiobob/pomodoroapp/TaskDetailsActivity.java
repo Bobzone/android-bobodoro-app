@@ -8,6 +8,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.epiobob.pomodoroapp.db.DbHelper;
+import com.example.epiobob.pomodoroapp.db.SqLiteDbHelper;
+
 import static com.example.epiobob.pomodoroapp.ResultCodes.*;
 
 /**
@@ -20,6 +23,7 @@ public class TaskDetailsActivity extends Activity {
     private Task taskContext;
     private EditText taskDetailsTitle;
     private EditText taskDetailsDescription;
+    private DbHelper dbHelper;
 
     public TaskDetailsActivity() {
     }
@@ -28,6 +32,7 @@ public class TaskDetailsActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.task_details);
+        dbHelper = new SqLiteDbHelper(this);
         intent = getIntent();
 
         passDataFromIntent();
@@ -50,6 +55,8 @@ public class TaskDetailsActivity extends Activity {
         startActivity(intent);
     }
 
+    // TODO: this method has to add new task if you are not editing
+    // and update when you edit already saved task
     public void saveChanges(View view) {
         taskContext = new Task.Builder()
                 .setTitle(String.valueOf(taskDetailsTitle.getText()))
@@ -59,6 +66,7 @@ public class TaskDetailsActivity extends Activity {
         Intent resultIntent = new Intent();
         resultIntent.putExtra("task_context", taskContext);
         setResult(Activity.RESULT_OK, resultIntent);
+        dbHelper.addNew(taskContext);
         finish();
     }
 

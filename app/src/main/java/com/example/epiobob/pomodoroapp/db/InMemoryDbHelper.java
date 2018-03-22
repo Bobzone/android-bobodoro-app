@@ -44,14 +44,19 @@ public class InMemoryDbHelper extends SQLiteOpenHelper implements DbHelper {
     }
 
     @Override
-    public boolean addNew(SQLiteDatabase db, Task task) {
+    public boolean addNew(Task task) {
         Log.d(TAG, "Inserting new record to in-memory database: " + task);
         database.put(1L, task);
         return true;
     }
 
     @Override
-    public List<Task> getAll(SQLiteDatabase db) {
+    public List<Task> getAll() {
+        throw new UnsupportedOperationException("Not yet implemented. ");
+    }
+
+    @Override
+    public void setOperatingDatabase(SQLiteDatabase db) {
         throw new UnsupportedOperationException("Not yet implemented. ");
     }
 }
