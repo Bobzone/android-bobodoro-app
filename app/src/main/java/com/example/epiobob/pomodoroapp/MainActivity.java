@@ -65,16 +65,23 @@ public class MainActivity extends AppCompatActivity {
         rootListView.setAdapter(myAdapter);
 
         rootListView.setOnItemClickListener(
-                new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent intent = new Intent(MainActivity.this, TaskDetailsActivity.class);
-                        taskContext = (Task) parent.getItemAtPosition(position);
-                        intent.putExtra("task_context", taskContext);
-                        startActivityForResult(intent, SAVE_TASK_CHANGE);
-                    }
+                (parent, view, position, id) -> {
+                    Intent intent = new Intent(MainActivity.this, TaskDetailsActivity.class);
+                    taskContext = (Task) parent.getItemAtPosition(position);
+                    intent.putExtra("task_context", taskContext);
+                    startActivityForResult(intent, SAVE_TASK_CHANGE);
                 }
         );
+
+        addTaskFab.setOnClickListener(event -> {
+            Intent intent = new Intent(MainActivity.this, TaskDetailsActivity.class);
+            taskContext = new Task.Builder().build();
+            // TODO: this should not add task to the database yet, add it to db on next activity when
+            // someone actually confirms the task creation
+//            dbHelper.addNew(sqLiteDatabase, taskContext);
+            intent.putExtra("task_context", taskContext);
+            startActivityForResult(intent, SAVE_TASK_CHANGE);
+        });
     }
 
     @Override
