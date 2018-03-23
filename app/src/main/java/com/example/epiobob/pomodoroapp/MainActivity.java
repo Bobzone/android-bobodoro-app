@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    private Task taskContext;
     private List<Task> tasks;
     private TaskAdapter myAdapter;
 
@@ -39,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton mainFab;
     private FloatingActionButton addTaskFab;
 
-    private SQLiteDatabase sqLiteDatabase = null;
     private DbHelper dbHelper = null;
 
     private boolean mainFabClicked = false;
@@ -80,14 +78,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Task resultTask = (Task) data.getSerializableExtra("task_context");
         switch (requestCode) {
             case (SAVE_TASK_CHANGE): {
                 if (resultCode == Activity.RESULT_OK || resultCode == ResultCodes.MASK_AS_COMPLETE_TASK) {
-                    Task resultTask = (Task) data.getSerializableExtra("task_context");
                     tasks.add(resultTask);
                 }
                 if (resultCode == REMOVE_TASK) {
-                    tasks.remove(taskContext);
+                    tasks.remove(resultTask);
                 }
                 myAdapter.notifyDataSetChanged();
             }
