@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
                     tasks.add(resultTask);
                 }
                 if (resultCode == REMOVE_TASK) {
+                    // TODO: this problem will disappear if you migrate from ListAdapter to CursorAdapter
                     tasks.remove(resultTask);
                 }
                 myAdapter.notifyDataSetChanged();
