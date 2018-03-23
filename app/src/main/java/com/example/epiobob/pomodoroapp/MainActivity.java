@@ -64,21 +64,17 @@ public class MainActivity extends AppCompatActivity {
         ListView rootListView = (ListView) findViewById(R.id.rootListView);
         rootListView.setAdapter(myAdapter);
 
-        rootListView.setOnItemClickListener(
-                (parent, view, position, id) -> {
-                    Intent intent = new Intent(MainActivity.this, TaskDetailsActivity.class);
-                    taskContext = (Task) parent.getItemAtPosition(position);
-                    intent.putExtra("task_context", taskContext);
-                    startActivityForResult(intent, SAVE_TASK_CHANGE);
-                }
-        );
+        rootListView.setOnItemClickListener((parent, view, position, id) ->
+                startTaskDetailsActivity((Task) parent.getItemAtPosition(position)));
 
-        addTaskFab.setOnClickListener(event -> {
-            Intent intent = new Intent(MainActivity.this, TaskDetailsActivity.class);
-            taskContext = new Task.Builder().build();
-            intent.putExtra("task_context", taskContext);
-            startActivityForResult(intent, SAVE_TASK_CHANGE);
-        });
+        addTaskFab.setOnClickListener(event ->
+                startTaskDetailsActivity(new Task.Builder().build()));
+    }
+
+    private void startTaskDetailsActivity(Task taskContext) {
+        Intent intent = new Intent(MainActivity.this, TaskDetailsActivity.class);
+        intent.putExtra("task_context", taskContext);
+        startActivityForResult(intent, SAVE_TASK_CHANGE);
     }
 
     @Override
