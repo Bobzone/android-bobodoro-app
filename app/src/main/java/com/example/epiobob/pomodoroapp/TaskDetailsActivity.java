@@ -32,7 +32,7 @@ public class TaskDetailsActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.task_details);
-        dbHelper = new SqLiteDbHelper(this);
+        dbHelper = SqLiteDbHelper.getDatabase(this);
         intent = getIntent();
 
         passDataFromIntent();

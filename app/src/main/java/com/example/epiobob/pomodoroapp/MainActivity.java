@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         mainFab = (FloatingActionButton) findViewById(R.id.fab);
         addTaskFab = (FloatingActionButton) findViewById(R.id.fab2);
 
-        dbHelper = new SqLiteDbHelper(this);
+        dbHelper = SqLiteDbHelper.getDatabase(this);
         dbHelper.setOperatingDatabase(dbHelper.getWritableDatabase());
         Log.d(TAG, "Database " + dbHelper.getDatabaseName() + " wired to main activity. ");
 
@@ -76,15 +76,11 @@ public class MainActivity extends AppCompatActivity {
         addTaskFab.setOnClickListener(event -> {
             Intent intent = new Intent(MainActivity.this, TaskDetailsActivity.class);
             taskContext = new Task.Builder().build();
-            // TODO: this should not add task to the database yet, add it to db on next activity when
-            // someone actually confirms the task creation
-//            dbHelper.addNew(sqLiteDatabase, taskContext);
             intent.putExtra("task_context", taskContext);
             startActivityForResult(intent, SAVE_TASK_CHANGE);
         });
     }
 
-    //TODO: fix this now
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -92,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
             case (SAVE_TASK_CHANGE): {
                 if (resultCode == Activity.RESULT_OK || resultCode == ResultCodes.MASK_AS_COMPLETE_TASK) {
                     Task resultTask = (Task) data.getSerializableExtra("task_context");
-                    tasks.set(tasks.indexOf(taskContext), resultTask);
+                    tasks.add(resultTask);
                 }
                 if (resultCode == REMOVE_TASK) {
                     tasks.remove(taskContext);

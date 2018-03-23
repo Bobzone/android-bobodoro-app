@@ -20,10 +20,18 @@ import java.util.List;
 public class SqLiteDbHelper extends SQLiteOpenHelper implements DbHelper {
 
     private static final String TAG = SqLiteDbHelper.class.getSimpleName();
+    private static SqLiteDbHelper instance = null;
     private SQLiteDatabase db;
 
     public SqLiteDbHelper(Context context) {
         super(context, DB_NAME, null, VERSION);
+    }
+
+    public static SqLiteDbHelper getDatabase(Context context) {
+        if (instance == null) {
+            instance = new SqLiteDbHelper(context);
+        }
+        return instance;
     }
 
     @Override
