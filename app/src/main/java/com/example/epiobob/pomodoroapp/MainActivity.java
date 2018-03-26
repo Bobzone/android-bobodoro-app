@@ -1,6 +1,7 @@
 package com.example.epiobob.pomodoroapp;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -19,12 +20,14 @@ import android.widget.RelativeLayout;
 
 import com.example.epiobob.pomodoroapp.db.DbHelper;
 import com.example.epiobob.pomodoroapp.db.SqLiteDbHelper;
+import com.example.epiobob.pomodoroapp.sms.SmsBroadcastReceiver;
 
 import java.io.File;
 import java.util.List;
 
 import static com.example.epiobob.pomodoroapp.ResultCodes.REMOVE_TASK;
 import static com.example.epiobob.pomodoroapp.ResultCodes.SAVE_TASK_CHANGE;
+import static com.example.epiobob.pomodoroapp.ResultCodes.SHARE_TASK;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton addTaskFab;
 
     private DbHelper dbHelper = null;
+    private BroadcastReceiver receiver;
 
     private boolean mainFabClicked = false;
 
@@ -58,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
         tasks = dbHelper.getAll();
         myAdapter = new TaskAdapter(this, tasks);
+        receiver = new SmsBroadcastReceiver();
 
         ListView rootListView = (ListView) findViewById(R.id.rootListView);
         rootListView.setAdapter(myAdapter);
@@ -88,6 +93,9 @@ public class MainActivity extends AppCompatActivity {
                     // TODO: this problem will disappear if you migrate from ListAdapter to CursorAdapter
                     tasks.remove(resultTask);
                 }
+                if (resultCode == SHARE_TASK) {
+
+                }
                 myAdapter.notifyDataSetChanged();
             }
         }
@@ -97,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 //        saveToInternalStorage(INTERNAL_STORAGE_FILE);
+//        registerReceiver()
         myAdapter.notifyDataSetChanged();
     }
 

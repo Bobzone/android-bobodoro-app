@@ -72,9 +72,9 @@
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="15dp"
-        android:scaleType="center"
         android:layout_marginRight="20dp"
         android:onClick="startSession"
+        android:scaleType="center"
         app:srcCompat="@drawable/stopwatch_plus32" />
 
     <android.support.design.widget.FloatingActionButton
@@ -84,10 +84,10 @@
         android:layout_alignTop="@+id/button2"
         android:layout_gravity="bottom|end"
         android:layout_marginRight="15dp"
-        android:scaleType="center"
         android:layout_toLeftOf="@+id/button2"
         android:layout_toStartOf="@+id/button2"
         android:onClick="markAsComplete"
+        android:scaleType="center"
         app:srcCompat="@drawable/success32" />
 
     <android.support.design.widget.FloatingActionButton
@@ -97,16 +97,15 @@
         android:layout_alignTop="@+id/startSessionButton"
         android:layout_gravity="bottom|end"
         android:layout_marginRight="15dp"
-        android:scaleType="center"
         android:layout_toLeftOf="@+id/startSessionButton"
         android:layout_toStartOf="@+id/startSessionButton"
         android:onClick="removeTask"
+        android:scaleType="center"
         app:srcCompat="@drawable/error32" />
 
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/button3"
-        android:scaleType="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/startSessionButton"
@@ -115,6 +114,20 @@
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="15dp"
         android:onClick="saveChanges"
+        android:scaleType="center"
         app:srcCompat="@android:drawable/ic_menu_save" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button3"
+        android:layout_alignLeft="@+id/button3"
+        android:layout_alignStart="@+id/button3"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="15dp"
+        android:onClick="shareTask"
+        android:scaleType="center"
+        app:srcCompat="@android:drawable/ic_menu_share" />
 
 </RelativeLayout>

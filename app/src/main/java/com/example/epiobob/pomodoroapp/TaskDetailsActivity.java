@@ -81,7 +81,14 @@ public class TaskDetailsActivity extends Activity {
         Intent resultIntent = new Intent();
         taskContext.markAsComplete();
         resultIntent.putExtra("task_context", taskContext);
-        setResult(ResultCodes.MASK_AS_COMPLETE_TASK, resultIntent);
+        setResult(MASK_AS_COMPLETE_TASK, resultIntent);
         finish();
+    }
+
+    public void shareTask(View view) {
+        // TODO: needs another intent where we can input contact number, then press SEND
+        Intent intent = new Intent(this, ShareTaskChooseRecipientActivity.class);
+        intent.putExtra("task_context", taskContext);
+        startActivity(intent);
     }
 }
