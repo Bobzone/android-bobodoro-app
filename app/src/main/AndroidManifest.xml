@@ -4,6 +4,9 @@
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
 
     <uses-feature
         android:name="android.hardware.sensor.gyroscope"
@@ -18,10 +21,11 @@
         android:theme="@style/AppTheme">
         <service android:name=".WakeUpScreenService" />
 
+
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait"
             android:label="Your Bobodoro tasks"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,8 +36,8 @@
 
         <activity
             android:name=".TaskDetailsActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/task_details_label" />
+            android:label="@string/task_details_label"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".SessionStartedActivity"
@@ -45,8 +49,14 @@
 
         <activity
             android:name=".CreditsActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/credits_label" />
+            android:label="@string/credits_label"
+            android:screenOrientation="portrait" />
+
+        <receiver android:name=".sms.SmsBroadcastReceiver">
+            <intent-filter android:priority="1">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
