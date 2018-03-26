@@ -51,6 +51,7 @@
             android:name=".CreditsActivity"
             android:label="@string/credits_label"
             android:screenOrientation="portrait" />
+        <activity android:name=".ShareTaskChooseRecipientActivity" />
 
         <receiver android:name=".sms.SmsBroadcastReceiver">
             <intent-filter android:priority="1">

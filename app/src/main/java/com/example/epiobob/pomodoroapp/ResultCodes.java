@@ -8,4 +8,5 @@ class ResultCodes {
     static final int SAVE_TASK_CHANGE = 113;
     static final int REMOVE_TASK = 114;
     static final int MASK_AS_COMPLETE_TASK = 115;
+    static final int SHARE_TASK = 116;
 }

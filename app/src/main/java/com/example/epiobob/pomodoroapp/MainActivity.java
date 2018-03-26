@@ -27,6 +27,7 @@ import java.util.List;
 
 import static com.example.epiobob.pomodoroapp.ResultCodes.REMOVE_TASK;
 import static com.example.epiobob.pomodoroapp.ResultCodes.SAVE_TASK_CHANGE;
+import static com.example.epiobob.pomodoroapp.ResultCodes.SHARE_TASK;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -91,6 +92,9 @@ public class MainActivity extends AppCompatActivity {
                 if (resultCode == REMOVE_TASK) {
                     // TODO: this problem will disappear if you migrate from ListAdapter to CursorAdapter
                     tasks.remove(resultTask);
+                }
+                if (resultCode == SHARE_TASK) {
+
                 }
                 myAdapter.notifyDataSetChanged();
             }
