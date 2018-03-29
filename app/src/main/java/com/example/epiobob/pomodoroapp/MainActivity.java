@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                     tasks.remove(resultTask);
                 }
                 if (resultCode == SHARE_TASK) {
-
+                    startActivity(Intent.createChooser(data, "Share using"));
                 }
                 myAdapter.notifyDataSetChanged();
             }

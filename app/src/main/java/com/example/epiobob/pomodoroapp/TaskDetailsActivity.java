@@ -86,9 +86,13 @@ public class TaskDetailsActivity extends Activity {
     }
 
     public void shareTask(View view) {
-        // TODO: needs another intent where we can input contact number, then press SEND
-        Intent intent = new Intent(this, ShareTaskChooseRecipientActivity.class);
-        intent.putExtra("task_context", taskContext);
-        startActivity(intent);
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        String shareBody = "Your collegue shares a Bobodoro task with you. Read this message, then open the app to check it out!";
+        // TODO: fix this now
+//        sharingIntent.putExtra("task_context", taskContext);
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        setResult(SHARE_TASK, sharingIntent);
+        finish();
     }
 }
