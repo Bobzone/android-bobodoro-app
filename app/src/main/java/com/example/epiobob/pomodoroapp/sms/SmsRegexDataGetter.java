@@ -17,19 +17,19 @@ public class SmsRegexDataGetter {
         String taskDescription = null;
         TaskStatusEnum taskStatus = null;
 
-        Pattern p = Pattern.compile("Title:(.*)");
+        Pattern p = Pattern.compile("Title:(.*?);");
         Matcher m = p.matcher(source);
         if (m.find()) {
             taskTitle = m.group(1); // " that is awesome"
         }
 
-        p = Pattern.compile("Description:(.*)");
+        p = Pattern.compile("Description:(.*?);");
         m = p.matcher(source);
         if (m.find()) {
             taskDescription = m.group(1); // " that is awesome"
         }
 
-        p = Pattern.compile("Status:(.*)");
+        p = Pattern.compile("Status:(.*?);");
         m = p.matcher(source);
         if (m.find()) {
             taskStatus = TaskStatusEnum.valueOf(m.group(1)); // " that is awesome"
