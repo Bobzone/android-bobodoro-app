@@ -14,9 +14,10 @@ import com.example.epiobob.pomodoroapp.Task;
 public class SmsBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        Toast.makeText(context, "very important message, YEEES", Toast.LENGTH_SHORT).show();
-        Task taskContext = (Task) intent.getSerializableExtra("task_context");
-        if (taskContext != null) {
+        String stringExtra = intent.getStringExtra(Intent.EXTRA_SUBJECT);
+        if (stringExtra != null && stringExtra.equals("Bobodoro shared task")) {
+            Toast.makeText(context, "very important message, YEEES", Toast.LENGTH_SHORT).show();
+
 
         }
     }

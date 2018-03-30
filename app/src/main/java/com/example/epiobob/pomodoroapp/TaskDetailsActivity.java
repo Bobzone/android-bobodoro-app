@@ -86,12 +86,12 @@ public class TaskDetailsActivity extends Activity {
     }
 
     public void shareTask(View view) {
-        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
+        String shareSubject = "Bobodoro shared task";
         String shareBody = "Your collegue shares a Bobodoro task with you. Read this message, then open the app to check it out!";
-        // TODO: fix this now
-//        sharingIntent.putExtra("task_context", taskContext);
-        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, shareSubject);
+        sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
         setResult(SHARE_TASK, sharingIntent);
         finish();
     }
