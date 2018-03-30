@@ -20,19 +20,19 @@ public class SmsRegexDataGetter {
         Pattern p = Pattern.compile("Title:(.*?);");
         Matcher m = p.matcher(source);
         if (m.find()) {
-            taskTitle = m.group(1); // " that is awesome"
+            taskTitle = m.group(1);
         }
 
         p = Pattern.compile("Description:(.*?);");
         m = p.matcher(source);
         if (m.find()) {
-            taskDescription = m.group(1); // " that is awesome"
+            taskDescription = m.group(1);
         }
 
         p = Pattern.compile("Status:(.*?);");
         m = p.matcher(source);
         if (m.find()) {
-            taskStatus = TaskStatusEnum.valueOf(m.group(1)); // " that is awesome"
+            taskStatus = TaskStatusEnum.valueOf(m.group(1));
         }
 
         return new Task.Builder()

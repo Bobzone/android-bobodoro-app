@@ -89,6 +89,7 @@ public class TaskDetailsActivity extends Activity {
         Intent sharingIntent = new Intent(Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
         String shareSubject = "Bobodoro shared task";
+        // TODO: create appropriate messagebody here
         String shareBody = "Your collegue shares a Bobodoro task with you. Read this message, then open the app to check it out!";
         sharingIntent.putExtra(Intent.EXTRA_SUBJECT, shareSubject);
         sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
