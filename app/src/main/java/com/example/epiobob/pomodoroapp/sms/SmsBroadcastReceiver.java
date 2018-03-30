@@ -5,13 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
-import com.example.epiobob.pomodoroapp.Task;
-
 /**
  * Created by piotr.gawronski2 on 26.03.2018.
  */
 
 public class SmsBroadcastReceiver extends BroadcastReceiver {
+
+    SmsRegexDataGetter getter;
+
     @Override
     public void onReceive(Context context, Intent intent) {
         String stringExtra = intent.getStringExtra(Intent.EXTRA_SUBJECT);
