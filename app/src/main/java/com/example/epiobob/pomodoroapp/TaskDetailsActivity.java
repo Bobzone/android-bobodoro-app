@@ -1,6 +1,7 @@
 package com.example.epiobob.pomodoroapp;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -86,13 +87,17 @@ public class TaskDetailsActivity extends Activity {
     }
 
     public void shareTask(View view) {
-        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-        sharingIntent.setType("text/plain");
-        String shareSubject = "Bobodoro shared task";
-        // TODO: create appropriate messagebody here
-        String shareBody = "Your collegue shares a Bobodoro task with you. Read this message, then open the app to check it out!";
-        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, shareSubject);
-        sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_VIEW);
+        sharingIntent.setType("vnd.android-dir/mms-sms");
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("This is ").append(Constants.BOBODORO_SHARED_SUBJECT).append(". Read this message, then open Bobodoro to find it inside the app!");
+        builder.append(" Title: ").append(taskContext.getTitle()).append(";");
+        builder.append(" Description: ").append(taskContext.getDescription()).append(";");
+        builder.append(" Status: ").append(taskContext.getStatus()).append(";");
+
+        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Constants.BOBODORO_SHARED_SUBJECT);
+        sharingIntent.putExtra(Intent.EXTRA_TEXT, builder.toString());
         setResult(SHARE_TASK, sharingIntent);
         finish();
     }

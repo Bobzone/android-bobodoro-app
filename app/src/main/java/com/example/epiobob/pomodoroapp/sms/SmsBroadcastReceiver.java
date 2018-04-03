@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
+import com.example.epiobob.pomodoroapp.Constants;
 import com.example.epiobob.pomodoroapp.Task;
 import com.example.epiobob.pomodoroapp.db.SqLiteDbHelper;
 
@@ -14,14 +15,16 @@ import com.example.epiobob.pomodoroapp.db.SqLiteDbHelper;
 
 public class SmsBroadcastReceiver extends BroadcastReceiver {
 
+
     @Override
     public void onReceive(Context context, Intent intent) {
-        String stringExtra = intent.getStringExtra(Intent.EXTRA_SUBJECT);
-        if (stringExtra != null && stringExtra.equals("Bobodoro shared task")) {
+        // TODO: probably have to read PDUs from SMS here?
+        String extraText = intent.getStringExtra(Intent.EXTRA_TEXT);
+        if (extraText != null && extraText.contains(Constants.BOBODORO_SHARED_SUBJECT)) {
             Toast.makeText(context, "very important message, YEEES", Toast.LENGTH_SHORT).show();
 
             SmsRegexDataGetter getter = new SmsRegexDataGetter();
-            Task taskFromSms = getter.get(intent.getStringExtra(Intent.EXTRA_TEXT));
+            Task taskFromSms = getter.get(extraText);
 
             SqLiteDbHelper dbHelper = SqLiteDbHelper.getDatabase(context);
             dbHelper.addNew(taskFromSms);
