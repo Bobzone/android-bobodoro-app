@@ -17,7 +17,7 @@ import java.util.List;
  * Created by epiobob on 2017-05-21.
  */
 
-class TaskAdapter extends ArrayAdapter<Task> {
+public class TaskAdapter extends ArrayAdapter<Task> {
 
     public TaskAdapter(@NonNull Context context, List<Task> tasks) {
         super(context, R.layout.task_on_list, tasks);

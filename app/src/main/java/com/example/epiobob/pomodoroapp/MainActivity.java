@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton addTaskFab;
 
     private DbHelper dbHelper = null;
-    private BroadcastReceiver receiver;
+//    private BroadcastReceiver receiver;
 
     private boolean mainFabClicked = false;
 
@@ -60,9 +60,9 @@ public class MainActivity extends AppCompatActivity {
         dbHelper.setOperatingDatabase(dbHelper.getWritableDatabase());
         Log.d(TAG, "Database " + dbHelper.getDatabaseName() + " wired to main activity. ");
 
-        tasks = dbHelper.getAll();
         myAdapter = new TaskAdapter(this, tasks);
-        receiver = new SmsBroadcastReceiver();
+        tasks = dbHelper.getAll();
+        dbHelper.setAdapter(myAdapter);
 
         ListView rootListView = (ListView) findViewById(R.id.rootListView);
         rootListView.setAdapter(myAdapter);
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 if (resultCode == SHARE_TASK) {
                     startActivity(Intent.createChooser(data, "Share using"));
                 }
-                myAdapter.notifyDataSetChanged();
+//                myAdapter.notifyDataSetChanged();
             }
         }
     }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 
 import com.example.epiobob.pomodoroapp.Task;
 
@@ -22,6 +23,7 @@ public class InMemoryDbHelper extends SQLiteOpenHelper implements DbHelper {
     private Context context;
 
     private Map<Long, Task> database;
+    private ArrayAdapter adapter;
 
     public InMemoryDbHelper(Context context) {
         super(context, DB_NAME, null, VERSION);
@@ -44,10 +46,9 @@ public class InMemoryDbHelper extends SQLiteOpenHelper implements DbHelper {
     }
 
     @Override
-    public boolean addNew(Task task) {
+    public void addNew(Task task) {
         Log.d(TAG, "Inserting new record to in-memory database: " + task);
         database.put(1L, task);
-        return true;
     }
 
     @Override
@@ -58,5 +59,10 @@ public class InMemoryDbHelper extends SQLiteOpenHelper implements DbHelper {
     @Override
     public void setOperatingDatabase(SQLiteDatabase db) {
         throw new UnsupportedOperationException("Not yet implemented. ");
+    }
+
+    @Override
+    public void setAdapter(ArrayAdapter adapter) {
+        this.adapter = adapter;
     }
 }

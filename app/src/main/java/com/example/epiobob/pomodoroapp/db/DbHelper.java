@@ -1,7 +1,7 @@
 package com.example.epiobob.pomodoroapp.db;
 
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.ArrayAdapter;
 
 import com.example.epiobob.pomodoroapp.Task;
 
@@ -27,9 +27,11 @@ public interface DbHelper {
 
     String getDatabaseName();
 
-    boolean addNew(Task task);
+    void addNew(Task task);
 
     List<Task> getAll();
 
     void setOperatingDatabase(SQLiteDatabase db);
+
+    void setAdapter(ArrayAdapter adapter);
 }
