@@ -19,8 +19,11 @@ import java.util.List;
 
 public class TaskAdapter extends ArrayAdapter<Task> {
 
+    private List<Task> tasks;
+
     public TaskAdapter(@NonNull Context context, List<Task> tasks) {
         super(context, R.layout.task_on_list, tasks);
+        this.tasks = tasks;
     }
 
     @NonNull
@@ -43,5 +46,12 @@ public class TaskAdapter extends ArrayAdapter<Task> {
         taskIcon.setImageResource(R.drawable.tomato64);
 
         return customView;
+    }
+
+    public void updateTasks(List<Task> tasks) {
+        // TODO: seems very non efficient, but works
+        this.tasks.clear();
+        this.tasks.addAll(tasks);
+        this.notifyDataSetChanged();
     }
 }

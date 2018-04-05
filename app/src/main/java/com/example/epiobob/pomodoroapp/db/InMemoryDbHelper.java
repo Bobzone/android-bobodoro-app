@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 
 import com.example.epiobob.pomodoroapp.Task;
+import com.example.epiobob.pomodoroapp.TaskAdapter;
 
 import java.util.HashMap;
 import java.util.List;
@@ -62,7 +63,7 @@ public class InMemoryDbHelper extends SQLiteOpenHelper implements DbHelper {
     }
 
     @Override
-    public void setAdapter(ArrayAdapter adapter) {
-        this.adapter = adapter;
+    public void setAdapter(TaskAdapter adapter) {
+        throw new UnsupportedOperationException("Not yet implemented. ");
     }
 }

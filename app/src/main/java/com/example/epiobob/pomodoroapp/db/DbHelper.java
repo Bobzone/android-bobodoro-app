@@ -4,6 +4,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.widget.ArrayAdapter;
 
 import com.example.epiobob.pomodoroapp.Task;
+import com.example.epiobob.pomodoroapp.TaskAdapter;
 
 import java.util.List;
 
@@ -33,5 +34,5 @@ public interface DbHelper {
 
     void setOperatingDatabase(SQLiteDatabase db);
 
-    void setAdapter(ArrayAdapter adapter);
+    void setAdapter(TaskAdapter adapter);
 }

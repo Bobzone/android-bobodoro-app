@@ -60,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
         dbHelper.setOperatingDatabase(dbHelper.getWritableDatabase());
         Log.d(TAG, "Database " + dbHelper.getDatabaseName() + " wired to main activity. ");
 
-        tasks = dbHelper.getAll();
-        myAdapter = new TaskAdapter(this, tasks);
+//        tasks = dbHelper.getAll();
+        myAdapter = new TaskAdapter(this, dbHelper.getAll());
         dbHelper.setAdapter(myAdapter);
 
         ListView rootListView = (ListView) findViewById(R.id.rootListView);

@@ -25,7 +25,7 @@ public class SqLiteDbHelper extends SQLiteOpenHelper implements DbHelper {
     private static final String TAG = SqLiteDbHelper.class.getSimpleName();
     private static SqLiteDbHelper instance = null;
     private SQLiteDatabase db;
-    private ArrayAdapter adapter;
+    private TaskAdapter adapter;
 
     public SqLiteDbHelper(Context context) {
         super(context, DB_NAME, null, VERSION);
@@ -104,7 +104,7 @@ public class SqLiteDbHelper extends SQLiteOpenHelper implements DbHelper {
                 .build());
     }
 
-    public void setAdapter(ArrayAdapter adapter) {
+    public void setAdapter(TaskAdapter adapter) {
         this.adapter = adapter;
     }
 
@@ -123,7 +123,7 @@ public class SqLiteDbHelper extends SQLiteOpenHelper implements DbHelper {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            adapter.notifyDataSetChanged();
+            adapter.updateTasks(getAll());
         }
     }
 
