@@ -36,13 +36,10 @@ public class MainActivity extends AppCompatActivity {
     private List<Task> tasks;
     private TaskAdapter myAdapter;
 
-    private static final String INTERNAL_STORAGE_FILENAME = "bobodoroTasks.dat";
-    private static final File INTERNAL_STORAGE_FILE = new File(INTERNAL_STORAGE_FILENAME);
     private FloatingActionButton mainFab;
     private FloatingActionButton addTaskFab;
 
     private DbHelper dbHelper = null;
-//    private BroadcastReceiver receiver;
 
     private boolean mainFabClicked = false;
 
@@ -60,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
         dbHelper.setOperatingDatabase(dbHelper.getWritableDatabase());
         Log.d(TAG, "Database " + dbHelper.getDatabaseName() + " wired to main activity. ");
 
-//        tasks = dbHelper.getAll();
         myAdapter = new TaskAdapter(this, dbHelper.getAll());
         dbHelper.setAdapter(myAdapter);
 
@@ -104,8 +100,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        saveToInternalStorage(INTERNAL_STORAGE_FILE);
-//        registerReceiver()
         myAdapter.notifyDataSetChanged();
     }
 
