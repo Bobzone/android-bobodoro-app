@@ -60,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
         dbHelper.setOperatingDatabase(dbHelper.getWritableDatabase());
         Log.d(TAG, "Database " + dbHelper.getDatabaseName() + " wired to main activity. ");
 
-        myAdapter = new TaskAdapter(this, tasks);
         tasks = dbHelper.getAll();
+        myAdapter = new TaskAdapter(this, tasks);
         dbHelper.setAdapter(myAdapter);
 
         ListView rootListView = (ListView) findViewById(R.id.rootListView);
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 if (resultCode == SHARE_TASK) {
                     startActivity(Intent.createChooser(data, "Share using"));
                 }
-//                myAdapter.notifyDataSetChanged();
+                myAdapter.notifyDataSetChanged();
             }
         }
     }
