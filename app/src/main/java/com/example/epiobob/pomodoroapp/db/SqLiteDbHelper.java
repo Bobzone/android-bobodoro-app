@@ -5,9 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 
 import com.example.epiobob.pomodoroapp.Task;
+import com.example.epiobob.pomodoroapp.TaskAdapter;
 import com.example.epiobob.pomodoroapp.TaskStatusEnum;
 
 import java.util.ArrayList;
@@ -22,6 +25,7 @@ public class SqLiteDbHelper extends SQLiteOpenHelper implements DbHelper {
     private static final String TAG = SqLiteDbHelper.class.getSimpleName();
     private static SqLiteDbHelper instance = null;
     private SQLiteDatabase db;
+    private TaskAdapter adapter;
 
     public SqLiteDbHelper(Context context) {
         super(context, DB_NAME, null, VERSION);
@@ -52,15 +56,8 @@ public class SqLiteDbHelper extends SQLiteOpenHelper implements DbHelper {
     }
 
     @Override
-    public boolean addNew(Task task) {
-        ContentValues cv = new ContentValues();
-        cv.put(columns[1], task.getTitle());
-        cv.put(columns[2], task.getDescription());
-        cv.put(columns[3], task.getStatus().name());
-
-        Log.d(TAG, "Inserting new record to database: " + task);
-        db.insert(TABLE_NAME, null, cv);
-        return true;
+    public void addNew(Task task) {
+        new addNewTaskAsync().execute(task);
     }
 
     @Override
@@ -106,4 +103,28 @@ public class SqLiteDbHelper extends SQLiteOpenHelper implements DbHelper {
                 .setDescription("You can mark these tasks as complete, delete them or edit them for further use! Good luck!")
                 .build());
     }
+
+    public void setAdapter(TaskAdapter adapter) {
+        this.adapter = adapter;
+    }
+
+    private class addNewTaskAsync extends AsyncTask<Task, Void, Void> {
+        @Override
+        protected Void doInBackground(Task... tasks) {
+            ContentValues cv = new ContentValues();
+            cv.put(columns[1], tasks[0].getTitle());
+            cv.put(columns[2], tasks[0].getDescription());
+            cv.put(columns[3], tasks[0].getStatus().name());
+
+            Log.d(TAG, "Inserting new record to database: " + tasks[0]);
+            db.insert(TABLE_NAME, null, cv);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            adapter.updateTasks(getAll());
+        }
+    }
+
 }

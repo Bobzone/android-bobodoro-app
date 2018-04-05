@@ -17,10 +17,13 @@ import java.util.List;
  * Created by epiobob on 2017-05-21.
  */
 
-class TaskAdapter extends ArrayAdapter<Task> {
+public class TaskAdapter extends ArrayAdapter<Task> {
+
+    private List<Task> tasks;
 
     public TaskAdapter(@NonNull Context context, List<Task> tasks) {
         super(context, R.layout.task_on_list, tasks);
+        this.tasks = tasks;
     }
 
     @NonNull
@@ -43,5 +46,12 @@ class TaskAdapter extends ArrayAdapter<Task> {
         taskIcon.setImageResource(R.drawable.tomato64);
 
         return customView;
+    }
+
+    public void updateTasks(List<Task> tasks) {
+        // TODO: seems very non efficient, but works
+        this.tasks.clear();
+        this.tasks.addAll(tasks);
+        this.notifyDataSetChanged();
     }
 }

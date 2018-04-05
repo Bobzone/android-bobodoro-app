@@ -33,16 +33,12 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    private List<Task> tasks;
     private TaskAdapter myAdapter;
 
-    private static final String INTERNAL_STORAGE_FILENAME = "bobodoroTasks.dat";
-    private static final File INTERNAL_STORAGE_FILE = new File(INTERNAL_STORAGE_FILENAME);
     private FloatingActionButton mainFab;
     private FloatingActionButton addTaskFab;
 
     private DbHelper dbHelper = null;
-    private BroadcastReceiver receiver;
 
     private boolean mainFabClicked = false;
 
@@ -60,9 +56,8 @@ public class MainActivity extends AppCompatActivity {
         dbHelper.setOperatingDatabase(dbHelper.getWritableDatabase());
         Log.d(TAG, "Database " + dbHelper.getDatabaseName() + " wired to main activity. ");
 
-        tasks = dbHelper.getAll();
-        myAdapter = new TaskAdapter(this, tasks);
-        receiver = new SmsBroadcastReceiver();
+        myAdapter = new TaskAdapter(this, dbHelper.getAll());
+        dbHelper.setAdapter(myAdapter);
 
         ListView rootListView = (ListView) findViewById(R.id.rootListView);
         rootListView.setAdapter(myAdapter);
@@ -83,15 +78,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Task resultTask = (Task) data.getSerializableExtra("task_context");
         switch (requestCode) {
+            // TODO: clean this up
             case (SAVE_TASK_CHANGE): {
                 if (resultCode == Activity.RESULT_OK || resultCode == ResultCodes.MASK_AS_COMPLETE_TASK) {
-                    tasks.add(resultTask);
                 }
                 if (resultCode == REMOVE_TASK) {
-                    // TODO: this problem will disappear if you migrate from ListAdapter to CursorAdapter
-                    tasks.remove(resultTask);
                 }
                 if (resultCode == SHARE_TASK) {
                     startActivity(Intent.createChooser(data, "Share using"));
@@ -104,8 +96,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        saveToInternalStorage(INTERNAL_STORAGE_FILE);
-//        registerReceiver()
         myAdapter.notifyDataSetChanged();
     }
 
