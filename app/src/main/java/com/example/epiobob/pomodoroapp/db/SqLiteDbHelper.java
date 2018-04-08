@@ -126,5 +126,4 @@ public class SqLiteDbHelper extends SQLiteOpenHelper implements DbHelper {
             adapter.updateTasks(getAll());
         }
     }
-
 }

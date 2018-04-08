@@ -42,7 +42,6 @@ public class TaskDetailsActivity extends Activity {
     private void passDataFromIntent() {
         taskDetailsTitle = (EditText) findViewById(R.id.etTaskDetailsTitle);
         taskDetailsDescription = (EditText) findViewById(R.id.etTaskDetailsDescription);
-//        taskDetailsStatus = (EditText) findViewById(R.id.etTaskDetailsStatus);
         taskContext = (Task) intent.getSerializableExtra("task_context");
 
         taskDetailsTitle.setText(taskContext.getTitle());
@@ -56,8 +55,6 @@ public class TaskDetailsActivity extends Activity {
         startActivity(intent);
     }
 
-    // TODO: this method has to add new task if you are not editing
-    // and update when you edit already saved task
     public void saveChanges(View view) {
         taskContext = new Task.Builder()
                 .setTitle(String.valueOf(taskDetailsTitle.getText()))
