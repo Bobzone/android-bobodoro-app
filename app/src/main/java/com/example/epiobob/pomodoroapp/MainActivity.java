@@ -35,10 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TaskAdapter myAdapter;
 
-    private FloatingActionButton mainFab;
     private FloatingActionButton addTaskFab;
-
-    private DbHelper dbHelper = null;
 
     private boolean mainFabClicked = false;
 
@@ -49,10 +46,10 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mainFab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton mainFab = (FloatingActionButton) findViewById(R.id.fab);
         addTaskFab = (FloatingActionButton) findViewById(R.id.fab2);
 
-        dbHelper = SqLiteDbHelper.getDatabase(this);
+        DbHelper dbHelper = SqLiteDbHelper.getDatabase(this);
         dbHelper.setOperatingDatabase(dbHelper.getWritableDatabase());
         Log.d(TAG, "Database " + dbHelper.getDatabaseName() + " wired to main activity. ");
 
@@ -79,12 +76,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            // TODO: clean this up
             case (SAVE_TASK_CHANGE): {
-                if (resultCode == Activity.RESULT_OK || resultCode == ResultCodes.MASK_AS_COMPLETE_TASK) {
-                }
-                if (resultCode == REMOVE_TASK) {
-                }
                 if (resultCode == SHARE_TASK) {
                     startActivity(Intent.createChooser(data, "Share using"));
                 }

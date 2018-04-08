@@ -13,32 +13,29 @@ import java.util.regex.Pattern;
 public class SmsRegexDataGetter {
 
     public Task get(String source) {
-        String taskTitle = null;
-        String taskDescription = null;
-        TaskStatusEnum taskStatus = null;
+        String taskTitle = getRegexResult(source, "Title:(.*?);");
 
-        Pattern p = Pattern.compile("Title:(.*?);");
-        Matcher m = p.matcher(source);
-        if (m.find()) {
-            taskTitle = m.group(1);
-        }
+        String taskDescription = getRegexResult(source, "Description:(.*?);");
 
-        p = Pattern.compile("Description:(.*?);");
-        m = p.matcher(source);
-        if (m.find()) {
-            taskDescription = m.group(1);
-        }
-
-        p = Pattern.compile("Status:(.*?);");
-        m = p.matcher(source);
-        if (m.find()) {
-            taskStatus = TaskStatusEnum.valueOf(m.group(1));
-        }
+        String taskStatusString = getRegexResult(source, "Status:(.*?);");
+        TaskStatusEnum taskStatus = TaskStatusEnum.valueOf(taskStatusString);
 
         return new Task.Builder()
                 .setTitle(taskTitle)
                 .setDescription(taskDescription)
                 .setStatus(taskStatus)
                 .build();
+    }
+
+    private String getRegexResult(String source, String regex) {
+        String result = null;
+        Pattern p;
+        Matcher m;
+        p = Pattern.compile(regex);
+        m = p.matcher(source);
+        if (m.find()) {
+            result = m.group(1);
+        }
+        return result;
     }
 }
